@@ -90,22 +90,22 @@ const methodologies = [
 
 export function Methodology() {
   return (
-    <div style={{ fontFamily: "'Lato', sans-serif" }}>
+    <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: "#FFFFFF" }}>
 
       {/* Hero */}
-      <section className="py-20 bg-[#1A1008]">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <span className="inline-block px-3 py-1 bg-[#B8963E]/10 border border-[#B8963E]/25 rounded text-[#B8963E] text-xs font-bold uppercase tracking-widest mb-5">
+            <span className="inline-block px-3 py-1 bg-[#C9A96E]/10 border border-[#C9A96E]/25 rounded text-[#C9A96E] text-xs font-bold uppercase tracking-widest mb-5">
               Evidence-Based Training
             </span>
             <h1
-              className="text-4xl sm:text-5xl font-bold text-white mb-5"
+              className="text-4xl sm:text-5xl font-bold text-[#1F2937] mb-5"
               style={{ fontFamily: "'Open Sans', sans-serif" }}
             >
-              Learning <span className="text-[#B8963E]">Methodology</span>
+              Learning <span className="text-[#C9A96E]">Methodology</span>
             </h1>
-            <p className="text-[#CFCFCF] text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-[#6B7280] text-lg max-w-2xl mx-auto leading-relaxed">
               Our training approach combines proven educational methodologies designed to maximize retention, build competence, and ensure real-world application.
             </p>
           </div>
@@ -117,17 +117,17 @@ export function Methodology() {
               { icon: Target, title: "Practical Focus", text: "Designed for immediate real-world application" },
               { icon: TrendingUp, title: "Proven Results", text: "Higher retention and performance outcomes" },
             ].map((p) => (
-              <div key={p.title} className="bg-[#221510] border border-[#B8963E]/10 rounded-lg p-7 text-center">
-                <div className="w-12 h-12 bg-[#1A1008] border border-[#B8963E]/20 rounded-lg flex items-center justify-center mx-auto mb-4">
-                  <p.icon className="w-6 h-6 text-[#B8963E]" />
+              <div key={p.title} className="bg-[#F5F7FA] border border-[#E5E7EB] rounded-lg p-7 text-center hover:border-[#C9A96E]/30 hover:shadow-[0_4px_16px_rgba(201,169,110,0.08)] transition-all">
+                <div className="w-12 h-12 bg-white border border-[#E5E7EB] rounded-lg flex items-center justify-center mx-auto mb-4">
+                  <p.icon className="w-6 h-6 text-[#C9A96E]" />
                 </div>
                 <h3
-                  className="text-lg font-bold text-white mb-2"
+                  className="text-lg font-bold text-[#1F2937] mb-2"
                   style={{ fontFamily: "'Open Sans', sans-serif" }}
                 >
                   {p.title}
                 </h3>
-                <p className="text-[#CFCFCF] text-sm">{p.text}</p>
+                <p className="text-[#6B7280] text-sm">{p.text}</p>
               </div>
             ))}
           </div>
@@ -142,7 +142,7 @@ export function Methodology() {
               >
                 {/* Image */}
                 <div className={index % 2 === 1 ? "lg:order-2" : "lg:order-1"}>
-                  <div className="rounded-lg overflow-hidden h-[360px] border border-[#B8963E]/15">
+                  <div className="rounded-lg overflow-hidden h-[360px] border border-[#E5E7EB]">
                     <ImageWithFallback
                       src={method.image}
                       alt={method.title}
@@ -154,25 +154,25 @@ export function Methodology() {
                 {/* Text */}
                 <div className={index % 2 === 1 ? "lg:order-1" : "lg:order-2"}>
                   <div className="flex items-center gap-4 mb-5">
-                    <div className="w-11 h-11 bg-[#221510] border border-[#B8963E]/20 rounded flex items-center justify-center flex-shrink-0">
-                      <method.icon className="w-5 h-5 text-[#B8963E]" />
+                    <div className="w-11 h-11 bg-[#F5F7FA] border border-[#E5E7EB] rounded flex items-center justify-center flex-shrink-0">
+                      <method.icon className="w-5 h-5 text-[#C9A96E]" />
                     </div>
                     <div>
                       <h2
-                        className="text-2xl font-bold text-white leading-tight"
+                        className="text-2xl font-bold text-[#1F2937] leading-tight"
                         style={{ fontFamily: "'Open Sans', sans-serif" }}
                       >
                         {method.title}
                       </h2>
-                      <p className="text-[#B8963E] text-sm font-semibold">{method.tagline}</p>
+                      <p className="text-[#C9A96E] text-sm font-semibold">{method.tagline}</p>
                     </div>
                   </div>
 
-                  <p className="text-[#CFCFCF] text-base mb-5 leading-relaxed">{method.description}</p>
+                  <p className="text-[#6B7280] text-base mb-5 leading-relaxed">{method.description}</p>
 
                   <div className="mb-5">
                     <h3
-                      className="text-sm font-bold text-white mb-3 uppercase tracking-wide"
+                      className="text-sm font-bold text-[#1F2937] mb-3 uppercase tracking-wide"
                       style={{ fontFamily: "'Open Sans', sans-serif" }}
                     >
                       Key Benefits
@@ -180,16 +180,16 @@ export function Methodology() {
                     <ul className="space-y-2">
                       {method.benefits.map((b, i) => (
                         <li key={i} className="flex items-start gap-2">
-                          <CheckCircle className="w-4 h-4 text-[#B8963E] flex-shrink-0 mt-0.5" />
-                          <span className="text-[#CFCFCF] text-sm">{b}</span>
+                          <CheckCircle className="w-4 h-4 text-[#C9A96E] flex-shrink-0 mt-0.5" />
+                          <span className="text-[#374151] text-sm">{b}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="bg-[#221510] border border-[#B8963E]/15 rounded-lg p-4">
-                    <h3 className="text-xs font-bold text-[#B8963E] uppercase tracking-wider mb-2">In Practice</h3>
-                    <p className="text-[#CFCFCF] text-sm leading-relaxed">{method.application}</p>
+                  <div className="bg-[#F5F7FA] border border-[#E5E7EB] rounded-lg p-4">
+                    <h3 className="text-xs font-bold text-[#C9A96E] uppercase tracking-wider mb-2">In Practice</h3>
+                    <p className="text-[#6B7280] text-sm leading-relaxed">{method.application}</p>
                   </div>
                 </div>
               </div>
@@ -197,27 +197,27 @@ export function Methodology() {
           </div>
 
           {/* Bottom CTA */}
-          <div className="mt-20 bg-[#221510] border border-[#B8963E]/15 rounded-lg p-12 text-center">
+          <div className="mt-20 bg-[#F5F7FA] border border-[#E5E7EB] rounded-lg p-12 text-center">
             <h2
-              className="text-3xl font-bold text-white mb-4"
+              className="text-3xl font-bold text-[#1F2937] mb-4"
               style={{ fontFamily: "'Open Sans', sans-serif" }}
             >
               Experience Our Methodology in Action
             </h2>
-            <p className="text-[#CFCFCF] mb-8 max-w-xl mx-auto leading-relaxed">
+            <p className="text-[#6B7280] mb-8 max-w-xl mx-auto leading-relaxed">
               Our comprehensive approach ensures you don't just learn — you master skills that can save lives and protect others.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/programs"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#B8963E] text-[#1A1008] font-bold rounded hover:bg-[#a07830] transition-all min-h-[48px]"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C9A96E] text-white font-bold rounded hover:bg-[#B8965D] transition-all min-h-[48px]"
               >
                 View Training Programs
                 <ArrowRight className="w-5 h-5" />
               </Link>
               <Link
                 to="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#B8963E]/50 text-[#B8963E] font-bold rounded hover:bg-[#1A1008] hover:border-[#B8963E] transition-all min-h-[48px]"
+                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#C9A96E]/50 text-[#C9A96E] font-bold rounded hover:bg-[#C9A96E]/5 hover:border-[#C9A96E] transition-all min-h-[48px]"
               >
                 Schedule a Consultation
               </Link>

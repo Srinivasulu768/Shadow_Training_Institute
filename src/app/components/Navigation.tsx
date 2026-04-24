@@ -4,7 +4,7 @@ import {
   Menu, X, ChevronDown,
   Heart, Activity, Shield, Siren, Target, Award,
   BookOpen, Brain, Users, GraduationCap,
-  Handshake, Phone, Home,
+  Phone, Home,
 } from "lucide-react";
 
 type MegaMenuColumn = {
@@ -76,7 +76,6 @@ const navItems: NavItem[] = [
         heading: "Certifications",
         items: [
           { label: "ALERRT Aligned", description: "Active shooter response standard", path: "/partnerships#alerrt", icon: Target },
-          
         ],
       },
     ],
@@ -117,8 +116,8 @@ export function Navigation() {
     <nav
       className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "bg-[#1A1008]/98 backdrop-blur-xl border-b border-[#B8963E]/20 shadow-[0_4px_24px_rgba(0,0,0,0.4)]"
-          : "bg-[#1A1008]/90 backdrop-blur-md border-b border-[#B8963E]/10"
+          ? "bg-white/98 backdrop-blur-xl border-b border-[#E5E7EB] shadow-[0_2px_12px_rgba(0,0,0,0.06)]"
+          : "bg-white border-b border-[#E5E7EB]"
       }`}
       style={{ fontFamily: "'Open Sans', sans-serif" }}
     >
@@ -137,10 +136,10 @@ export function Navigation() {
               className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-105"
             />
             <div>
-              <div className="font-bold text-base text-white tracking-tight leading-tight">
+              <div className="font-bold text-base text-[#1F2937] tracking-tight leading-tight">
                 Shadow Training Institute
               </div>
-              <div className="text-[11px] text-[#B8963E] font-light tracking-wide">
+              <div className="text-[11px] text-[#C9A96E] font-light tracking-wide">
                 Disciplina Quasi Modus Vivendi
               </div>
             </div>
@@ -159,8 +158,8 @@ export function Navigation() {
                   <button
                     className={`flex items-center gap-1 px-4 py-2 text-sm font-semibold rounded transition-all duration-200 ${
                       activeMenu === item.label
-                        ? "text-[#B8963E] bg-[#B8963E]/8"
-                        : "text-[#CFCFCF] hover:text-[#B8963E] hover:bg-[#B8963E]/5"
+                        ? "text-[#C9A96E] bg-[#C9A96E]/8"
+                        : "text-[#374151] hover:text-[#C9A96E] hover:bg-[#C9A96E]/5"
                     }`}
                   >
                     {item.label}
@@ -173,7 +172,7 @@ export function Navigation() {
 
                   {activeMenu === item.label && (
                     <div
-                      className="absolute top-full mt-1 bg-[#1A1008] border border-[#B8963E]/20 rounded-lg shadow-[0_16px_48px_rgba(0,0,0,0.6)] overflow-hidden"
+                      className="absolute top-full mt-1 bg-white border border-[#E5E7EB] rounded-lg shadow-[0_8px_32px_rgba(0,0,0,0.10)] overflow-hidden"
                       style={{
                         width: `${item.mega.length * 280}px`,
                         maxWidth: "min(600px, calc(100vw - 32px))",
@@ -183,14 +182,14 @@ export function Navigation() {
                       onMouseEnter={() => handleMouseEnter(item.label)}
                       onMouseLeave={handleMouseLeave}
                     >
-                      <div className="h-px w-full bg-[#B8963E]/60" />
+                      <div className="h-px w-full bg-[#C9A96E]" />
                       <div
-                        className="grid divide-x divide-[#B8963E]/10"
+                        className="grid divide-x divide-[#E5E7EB]"
                         style={{ gridTemplateColumns: `repeat(${item.mega.length}, 1fr)` }}
                       >
                         {item.mega.map((col) => (
                           <div key={col.heading} className="p-4">
-                            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#B8963E] mb-3">
+                            <p className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#C9A96E] mb-3">
                               {col.heading}
                             </p>
                             <ul className="space-y-0.5">
@@ -199,16 +198,16 @@ export function Navigation() {
                                   <Link
                                     to={link.path}
                                     onClick={() => setActiveMenu(null)}
-                                    className="flex items-center gap-3 px-2 py-2 rounded group/item hover:bg-[#221510] transition-all duration-150"
+                                    className="flex items-center gap-3 px-2 py-2 rounded group/item hover:bg-[#F5F7FA] transition-all duration-150"
                                   >
-                                    <div className="w-7 h-7 rounded bg-[#221510] flex items-center justify-center flex-shrink-0 group-hover/item:bg-[#B8963E] transition-colors duration-150">
-                                      <link.icon className="w-3.5 h-3.5 text-[#B8963E] group-hover/item:text-[#1A1008] transition-colors duration-150" />
+                                    <div className="w-7 h-7 rounded bg-[#F3F4F6] flex items-center justify-center flex-shrink-0 group-hover/item:bg-[#C9A96E] transition-colors duration-150">
+                                      <link.icon className="w-3.5 h-3.5 text-[#C9A96E] group-hover/item:text-white transition-colors duration-150" />
                                     </div>
                                     <div>
-                                      <div className="text-sm font-semibold text-white group-hover/item:text-[#B8963E] transition-colors leading-tight">
+                                      <div className="text-sm font-semibold text-[#1F2937] group-hover/item:text-[#C9A96E] transition-colors leading-tight">
                                         {link.label}
                                       </div>
-                                      <div className="text-xs text-[#CFCFCF]/60 mt-0.5">
+                                      <div className="text-xs text-[#9CA3AF] mt-0.5">
                                         {link.description}
                                       </div>
                                     </div>
@@ -219,12 +218,12 @@ export function Navigation() {
                           </div>
                         ))}
                       </div>
-                      <div className="border-t border-[#B8963E]/10 bg-[#221510]/40 px-4 py-2.5 flex items-center justify-between">
-                        <span className="text-xs text-[#CFCFCF]/50">Need a custom solution?</span>
+                      <div className="border-t border-[#E5E7EB] bg-[#F5F7FA] px-4 py-2.5 flex items-center justify-between">
+                        <span className="text-xs text-[#9CA3AF]">Need a custom solution?</span>
                         <Link
                           to="/contact"
                           onClick={() => setActiveMenu(null)}
-                          className="text-xs font-bold text-[#B8963E] hover:underline"
+                          className="text-xs font-bold text-[#C9A96E] hover:underline"
                         >
                           Contact us →
                         </Link>
@@ -238,8 +237,8 @@ export function Navigation() {
                   to={item.path!}
                   className={`px-4 py-2 text-sm font-semibold rounded transition-all duration-200 ${
                     isActive(item.path)
-                      ? "text-[#B8963E] bg-[#B8963E]/8"
-                      : "text-[#CFCFCF] hover:text-[#B8963E] hover:bg-[#B8963E]/5"
+                      ? "text-[#C9A96E] bg-[#C9A96E]/8"
+                      : "text-[#374151] hover:text-[#C9A96E] hover:bg-[#C9A96E]/5"
                   }`}
                 >
                   {item.label}
@@ -249,7 +248,7 @@ export function Navigation() {
 
             <Link
               to="/contact"
-              className="ml-3 px-6 py-2.5 bg-[#B8963E] text-[#1A1008] text-sm font-bold rounded hover:bg-[#a07830] transition-all duration-200 hover:shadow-[0_0_20px_rgba(184,150,62,0.18)]"
+              className="ml-3 px-6 py-2.5 bg-[#C9A96E] text-white text-sm font-bold rounded hover:bg-[#B8965D] transition-all duration-200 hover:shadow-[0_4px_16px_rgba(201,169,110,0.30)]"
             >
               Enroll Now
             </Link>
@@ -257,7 +256,7 @@ export function Navigation() {
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden text-[#B8963E] p-2"
+            className="md:hidden text-[#C9A96E] p-2"
             onClick={() => setIsOpen(!isOpen)}
             aria-label="Toggle menu"
           >
@@ -268,28 +267,28 @@ export function Navigation() {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden bg-[#1A1008] border-t border-[#B8963E]/15 max-h-[80vh] overflow-y-auto">
+        <div className="md:hidden bg-white border-t border-[#E5E7EB] max-h-[80vh] overflow-y-auto">
           <div className="px-4 py-4 space-y-1">
             {navItems.map((item) =>
               item.mega ? (
                 <div key={item.label}>
                   <button
                     onClick={() => setOpenMobile(openMobile === item.label ? null : item.label)}
-                    className="w-full flex items-center justify-between py-3 px-4 rounded text-[#CFCFCF] font-semibold hover:bg-[#221510] hover:text-[#B8963E] transition-all"
+                    className="w-full flex items-center justify-between py-3 px-4 rounded text-[#374151] font-semibold hover:bg-[#F5F7FA] hover:text-[#C9A96E] transition-all"
                   >
                     {item.label}
                     <ChevronDown
                       className={`w-4 h-4 transition-transform duration-200 ${
-                        openMobile === item.label ? "rotate-180 text-[#B8963E]" : ""
+                        openMobile === item.label ? "rotate-180 text-[#C9A96E]" : ""
                       }`}
                     />
                   </button>
 
                   {openMobile === item.label && (
-                    <div className="ml-4 mt-1 mb-2 border-l-2 border-[#B8963E]/20 pl-4 space-y-3">
+                    <div className="ml-4 mt-1 mb-2 border-l-2 border-[#E5E7EB] pl-4 space-y-3">
                       {item.mega.map((col) => (
                         <div key={col.heading}>
-                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#B8963E] mb-2">
+                          <p className="text-[10px] font-bold uppercase tracking-widest text-[#C9A96E] mb-2">
                             {col.heading}
                           </p>
                           <ul className="space-y-1">
@@ -298,9 +297,9 @@ export function Navigation() {
                                 <Link
                                   to={link.path}
                                   onClick={() => { setIsOpen(false); setOpenMobile(null); }}
-                                  className="flex items-center gap-3 py-2 px-2 rounded text-sm text-[#CFCFCF] hover:text-[#B8963E] hover:bg-[#221510] transition-all"
+                                  className="flex items-center gap-3 py-2 px-2 rounded text-sm text-[#374151] hover:text-[#C9A96E] hover:bg-[#F5F7FA] transition-all"
                                 >
-                                  <link.icon className="w-4 h-4 text-[#B8963E] flex-shrink-0" />
+                                  <link.icon className="w-4 h-4 text-[#C9A96E] flex-shrink-0" />
                                   {link.label}
                                 </Link>
                               </li>
@@ -318,8 +317,8 @@ export function Navigation() {
                   onClick={() => setIsOpen(false)}
                   className={`flex items-center gap-3 py-3 px-4 rounded font-semibold transition-all ${
                     isActive(item.path)
-                      ? "bg-[#221510] text-[#B8963E]"
-                      : "text-[#CFCFCF] hover:bg-[#221510] hover:text-[#B8963E]"
+                      ? "bg-[#F5F7FA] text-[#C9A96E]"
+                      : "text-[#374151] hover:bg-[#F5F7FA] hover:text-[#C9A96E]"
                   }`}
                 >
                   {item.label === "Home" && <Home className="w-4 h-4" />}
@@ -332,7 +331,7 @@ export function Navigation() {
             <Link
               to="/contact"
               onClick={() => setIsOpen(false)}
-              className="block mt-3 py-4 px-5 bg-[#B8963E] text-[#1A1008] font-bold rounded text-center hover:bg-[#a07830] transition-all"
+              className="block mt-3 py-4 px-5 bg-[#C9A96E] text-white font-bold rounded text-center hover:bg-[#B8965D] transition-all"
             >
               Enroll Now
             </Link>
