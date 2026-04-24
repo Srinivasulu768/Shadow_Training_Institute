@@ -113,9 +113,9 @@
   --eagle-scale: 1.0;
   --eagle-dur: 1.2s;
   --eagle-ease: ease-in-out;
-  opacity: 0.28;
-  filter: blur(0px) brightness(1.05)
-                    drop-shadow(0 0 20px rgba(201, 168, 76, 0.22));
+  opacity: 0.10;
+  filter: blur(0px) brightness(0.85)
+                    drop-shadow(0 0 20px rgba(201, 168, 76, 0.10));
 }
 .eagle-settled .eagle-glow  { opacity: 0; }
 .eagle-settled .eagle-sheen { opacity: 0; }
@@ -136,8 +136,8 @@
    Reduced motion — static faint watermark, no animation
 ───────────────────────────────────────────────────────────── */
 .eagle-reduced {
-  opacity: 0.28;
-  filter: blur(0px) brightness(1.05) drop-shadow(0 0 16px rgba(201, 168, 76, 0.18));
+  opacity: 0.10;
+  filter: blur(0px) brightness(0.85) drop-shadow(0 0 16px rgba(201, 168, 76, 0.10));
   animation: none !important;
   transition: none !important;
 }

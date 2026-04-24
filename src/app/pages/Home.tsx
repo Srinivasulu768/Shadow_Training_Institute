@@ -6,7 +6,6 @@ import {
   Star, Clock, BadgeCheck,
 } from "lucide-react";
 import { EagleWatermark } from "../components/EagleWatermark";
-import { HeroEaglePanel } from "../components/HeroEaglePanel";
 
 const audiences = [
   {
@@ -129,7 +128,6 @@ const whyUs = [
   { icon: BadgeCheck, title: "Nationally Certified", text: "All programs meet or exceed national certification standards." },
   { icon: Users, title: "Expert Instructors", text: "Certified professionals with real-world operational experience." },
   { icon: Target, title: "Scenario-Based", text: "Training built around realistic, high-fidelity simulations." },
-  { icon: Star, title: "Proven Results", text: "98% satisfaction rate across 1,000+ trained professionals." },
   { icon: Clock, title: "Flexible Scheduling", text: "On-site, off-site, and custom scheduling to fit your team." },
   { icon: Building2, title: "Corporate Solutions", text: "Tailored programs for organizations of any size or sector." },
 ];
@@ -147,72 +145,59 @@ export function Home() {
       <EagleWatermark />
 
       {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-stretch overflow-hidden bg-white" style={{ zIndex: 10 }}>
-        {/* ── LEFT: HERO CONTENT ── */}
-        <div className="relative z-10 flex items-center w-full lg:w-1/2 px-8 sm:px-12 lg:px-16 xl:px-24 py-24">
-          <div className="w-full max-w-xl">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white" style={{ zIndex: 10 }}>
+        {/* ── HERO CONTENT — centered ── */}
+        <div className="relative z-10 flex flex-col items-center text-center px-8 sm:px-12 lg:px-16 xl:px-24 py-32 w-full max-w-3xl mx-auto">
 
-            {/* Hero headline */}
-            <h1
-              className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1F2937] mb-6 leading-[1.1] tracking-tight"
-              style={{ fontFamily: "'Open Sans', sans-serif" }}
+          {/* Hero headline */}
+          <h1
+            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1F2937] mb-6 leading-[1.1] tracking-tight"
+            style={{ fontFamily: "'Open Sans', sans-serif" }}
+          >
+            Train for Reality.
+            <br />
+            <span className="text-[#C9A96E]">Not Theory.</span>
+          </h1>
+
+          <p className="text-base sm:text-lg text-[#6B7280] mb-8 max-w-xl leading-relaxed">
+            Real-world emergency and tactical training for professionals who need to perform when it matters most.
+          </p>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-4 mb-12">
+            <Link
+              to="/programs"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C9A96E] text-white text-base font-bold rounded hover:bg-[#B8965D] transition-all hover:shadow-[0_4px_20px_rgba(201,169,110,0.30)] min-h-[48px]"
             >
-              Train for Reality.
-              <br />
-              <span className="text-[#C9A96E]">Not Theory.</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-[#6B7280] mb-8 max-w-lg leading-relaxed">
-              Real-world emergency and tactical training for professionals who need to perform when it matters most.
-            </p>
-
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Link
-                to="/programs"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C9A96E] text-white text-base font-bold rounded hover:bg-[#B8965D] transition-all hover:shadow-[0_4px_20px_rgba(201,169,110,0.30)] min-h-[48px]"
-              >
-                View Programs
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-              <Link
-                to="/contact"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#D1D5DB] text-[#374151] text-base font-bold rounded hover:border-[#C9A96E] hover:text-[#C9A96E] transition-all min-h-[48px]"
-              >
-                Request Training
-              </Link>
-            </div>
-
-            {/* Trust indicators */}
-            <div className="grid grid-cols-2 gap-3">
-              {[
-                { icon: BadgeCheck, label: "Nationally Certified", desc: "ALERRT Aligned" },
-                { icon: Users, label: "Expert Instructors", desc: "Real-world experience" },
-                { icon: Target, label: "Scenario-Based", desc: "High-fidelity training" },
-                { icon: Shield, label: "Enterprise Ready", desc: "Corporate solutions" },
-              ].map((item, idx) => (
-                <div key={idx} className="flex items-start gap-3">
-                  <div className="w-8 h-8 rounded flex items-center justify-center bg-[#C9A96E]/10 border border-[#C9A96E]/20 flex-shrink-0 mt-0.5">
-                    <item.icon className="w-4 h-4 text-[#C9A96E]" />
-                  </div>
-                  <div>
-                    <div className="text-xs font-bold text-[#1F2937] uppercase tracking-wide">{item.label}</div>
-                    <div className="text-xs text-[#9CA3AF]">{item.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+              View Programs
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <Link
+              to="/contact"
+              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#D1D5DB] text-[#374151] text-base font-bold rounded hover:border-[#C9A96E] hover:text-[#C9A96E] transition-all min-h-[48px]"
+            >
+              Request Training
+            </Link>
           </div>
-        </div>
 
-        {/* ── RIGHT: ANIMATED EAGLE PANEL ── */}
-        <div className="hidden lg:block lg:w-1/2 flex-shrink-0 relative" style={{ minHeight: "100vh" }}>
-          <HeroEaglePanel />
-        </div>
-
-        {/* placeholder to keep old grid structure removed — replaced above */}
-        <div className="hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-center">
+          {/* Trust indicators */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+            {[
+              { icon: BadgeCheck, label: "Nationally Certified", desc: "ALERRT Aligned" },
+              { icon: Users, label: "Expert Instructors", desc: "Real-world experience" },
+              { icon: Target, label: "Scenario-Based", desc: "High-fidelity training" },
+              { icon: Shield, label: "Enterprise Ready", desc: "Corporate solutions" },
+            ].map((item, idx) => (
+              <div key={idx} className="flex items-start gap-3">
+                <div className="w-8 h-8 rounded flex items-center justify-center bg-[#C9A96E]/10 border border-[#C9A96E]/20 flex-shrink-0 mt-0.5">
+                  <item.icon className="w-4 h-4 text-[#C9A96E]" />
+                </div>
+                <div className="text-left">
+                  <div className="text-xs font-bold text-[#1F2937] uppercase tracking-wide">{item.label}</div>
+                  <div className="text-xs text-[#9CA3AF]">{item.desc}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
@@ -528,14 +513,6 @@ export function Home() {
             </Link>
           </div>
 
-          <div className="grid grid-cols-3 gap-6 max-w-sm mx-auto">
-            {[["1,000+", "Professionals Trained"], ["98%", "Satisfaction Rate"], ["15+", "Years Experience"]].map(([num, label]) => (
-              <div key={label} className="text-center">
-                <div className="text-2xl font-bold text-[#C9A96E]" style={{ fontFamily: "'Open Sans', sans-serif" }}>{num}</div>
-                <div className="text-[#6B7280] text-xs mt-1">{label}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

@@ -18,16 +18,16 @@ export function Footer() {
               <img
                 src="/images/shadow-logo.png"
                 alt="Shadow Training Institute"
-                className="h-11 w-11 object-contain"
+                className="h-20 w-20 object-contain"
               />
               <div>
                 <div
-                  className="font-bold text-base text-[#1F2937] leading-tight"
+                  className="font-bold text-xl text-[#1F2937] leading-tight"
                   style={{ fontFamily: "'Open Sans', sans-serif" }}
                 >
                   Shadow Training Institute
                 </div>
-                <div className="text-[11px] text-[#C9A96E] font-light tracking-wide">
+                <div className="text-sm text-[#C9A96E] font-light tracking-wide">
                   Disciplina Quasi Modus Vivendi
                 </div>
               </div>
@@ -37,26 +37,26 @@ export function Footer() {
               Elite training for security professionals, corporate teams, healthcare staff, and emergency responders. Real-world scenarios, certified instructors, proven results.
             </p>
 
-            <div className="space-y-3 text-base text-[#6B7280]">
+            <div className="space-y-4 text-base text-[#6B7280]">
               <a
                 href="https://maps.google.com/?q=3427+E+Trinity+Mills+Road+Dallas+Texas+75287"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-start gap-3 hover:text-[#C9A96E] transition-colors group"
               >
-                <MapPin className="w-4 h-4 text-[#C9A96E] flex-shrink-0 mt-0.5" />
+                <MapPin className="w-5 h-5 text-[#C9A96E] flex-shrink-0 mt-0.5" />
                 <span>3427 E Trinity Mills Road, Dallas, Texas 75287</span>
               </a>
               <a href="tel:+12146132588" className="flex items-center gap-3 hover:text-[#C9A96E] transition-colors">
-                <Phone className="w-4 h-4 text-[#C9A96E] flex-shrink-0" />
+                <Phone className="w-5 h-5 text-[#C9A96E] flex-shrink-0" />
                 <span>Office: +1 (214) 613-2588</span>
               </a>
               <a href="tel:+19722002955" className="flex items-center gap-3 hover:text-[#C9A96E] transition-colors">
-                <Phone className="w-4 h-4 text-[#C9A96E] flex-shrink-0" />
+                <Phone className="w-5 h-5 text-[#C9A96E] flex-shrink-0" />
                 <span>Dispatch: +1 (972) 200-2955</span>
               </a>
               <a href="mailto:info@shadowtraininginstitute.com" className="flex items-center gap-3 hover:text-[#C9A96E] transition-colors">
-                <Mail className="w-4 h-4 text-[#C9A96E] flex-shrink-0" />
+                <Mail className="w-5 h-5 text-[#C9A96E] flex-shrink-0" />
                 <span>info@shadowtraininginstitute.com</span>
               </a>
             </div>
@@ -65,12 +65,12 @@ export function Footer() {
           {/* Quick Links */}
           <div>
             <h3
-              className="text-sm font-bold uppercase tracking-widest text-[#1F2937] mb-5"
+              className="text-base font-bold uppercase tracking-widest text-[#1F2937] mb-6"
               style={{ fontFamily: "'Open Sans', sans-serif" }}
             >
               Quick Links
             </h3>
-            <ul className="space-y-2.5 text-base text-[#6B7280]">
+            <ul className="space-y-4 text-base text-[#6B7280]">
               {[
                 { to: "/", label: "Home" },
                 { to: "/programs", label: "Programs" },
@@ -95,12 +95,12 @@ export function Footer() {
           {/* Programs */}
           <div>
             <h3
-              className="text-sm font-bold uppercase tracking-widest text-[#1F2937] mb-5"
+              className="text-base font-bold uppercase tracking-widest text-[#1F2937] mb-6"
               style={{ fontFamily: "'Open Sans', sans-serif" }}
             >
               Programs
             </h3>
-            <ul className="space-y-2.5 text-base text-[#6B7280]">
+            <ul className="space-y-4 text-base text-[#6B7280]">
               {[
                 { to: "/programs#cpr-aed", label: "CPR / AED / First Aid" },
                 { to: "/programs#stop-the-bleed", label: "Stop the Bleed" },
