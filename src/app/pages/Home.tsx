@@ -218,7 +218,7 @@ export function Home() {
       </section>
 
       {/* ── WHO WE TRAIN ─────────────────────────────────────── */}
-      <section className="py-20 bg-[#F5F7FA]" style={{ zIndex: 10 }}>
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2
@@ -237,7 +237,8 @@ export function Home() {
               <Link
                 key={a.title}
                 to={a.link}
-                className="group bg-white border border-[#E5E7EB] rounded-lg p-7 hover:border-[#C9A96E]/50 hover:-translate-y-1 transition-all duration-300 shadow-[0_4px_12px_rgba(0,0,0,0.05)]"
+                className="group relative bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-7 hover:border-[#C9A96E]/50 hover:-translate-y-1 shadow-[0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_24px_rgba(201,169,110,0.12)]"
+                style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease", position: "relative", zIndex: 3 }}
               >
                 <div className="w-12 h-12 bg-[#F3F4F6] border border-[#E5E7EB] rounded-lg flex items-center justify-center mb-5 group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] transition-all duration-300">
                   <a.icon className="w-6 h-6 text-[#C9A96E] group-hover:text-white transition-colors duration-300" />
@@ -256,10 +257,10 @@ export function Home() {
       </section>
 
       {/* ── TRAINING METHODOLOGY ─────────────────────────────── */}
-      <section className="py-20 bg-white" style={{ zIndex: 10 }}>
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <span className="inline-block px-3 py-1 bg-[#C9A96E]/10 border border-[#C9A96E]/25 rounded text-[#C9A96E] text-xs font-bold uppercase tracking-widest mb-4">
+            <span className="inline-block px-3 py-1 bg-white border border-[#C9A96E]/25 rounded text-[#C9A96E] text-xs font-bold uppercase tracking-widest mb-4">
               Our Approach
             </span>
             <h2
@@ -277,7 +278,8 @@ export function Home() {
             {methodologies.map((m, i) => (
               <div
                 key={m.title}
-                className="bg-[#F5F7FA] border border-[#E5E7EB] rounded-lg p-6 hover:border-[#C9A96E]/40 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)] transition-all duration-300 group"
+                className="bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-6 hover:border-[#C9A96E]/40 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)] group"
+                style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease", position: "relative", zIndex: 3 }}
               >
                 <div className="w-10 h-10 bg-white border border-[#E5E7EB] rounded flex items-center justify-center mb-4 group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] transition-all duration-300">
                   <m.icon className="w-5 h-5 text-[#C9A96E] group-hover:text-white transition-colors duration-300" />
@@ -297,7 +299,8 @@ export function Home() {
           <div className="text-center">
             <Link
               to="/methodology"
-              className="inline-flex items-center gap-2 px-6 py-3 border border-[#D1D5DB] text-[#374151] text-sm font-bold rounded hover:border-[#C9A96E] hover:text-[#C9A96E] transition-all"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white/60 hover:bg-white border border-[#D1D5DB] text-[#374151] text-sm font-bold rounded hover:border-[#C9A96E] hover:text-[#C9A96E]"
+              style={{ transition: "background-color 200ms ease, border-color 200ms ease, color 200ms ease", position: "relative", zIndex: 3 }}
             >
               Explore Our Methodology
               <ArrowRight className="w-4 h-4" />
@@ -307,10 +310,10 @@ export function Home() {
       </section>
 
       {/* ── TRAINING PROGRAMS ────────────────────────────────── */}
-      <section className="py-20 bg-[#F5F7FA]" style={{ zIndex: 10 }}>
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
-            <span className="inline-block px-3 py-1 bg-[#C9A96E]/10 border border-[#C9A96E]/25 rounded text-[#C9A96E] text-xs font-bold uppercase tracking-widest mb-4">
+            <span className="inline-block px-3 py-1 bg-white border border-[#C9A96E]/25 rounded text-[#C9A96E] text-xs font-bold uppercase tracking-widest mb-4">
               Certification Programs
             </span>
             <h2
@@ -328,7 +331,8 @@ export function Home() {
             {programs.map((p) => (
               <div
                 key={p.title}
-                className="bg-white border border-[#E5E7EB] rounded-lg p-7 flex flex-col hover:border-[#C9A96E]/40 hover:shadow-[0_4px_16px_rgba(201,169,110,0.08)] transition-all duration-300 group"
+                className="bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-7 flex flex-col hover:border-[#C9A96E]/40 hover:shadow-[0_4px_16px_rgba(201,169,110,0.08)] group"
+                style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease", position: "relative", zIndex: 3 }}
               >
                 <div className="flex items-start justify-between mb-5">
                   <div className="w-11 h-11 bg-[#F5F7FA] border border-[#E5E7EB] rounded flex items-center justify-center group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] transition-all duration-300">
@@ -383,7 +387,7 @@ export function Home() {
       </section>
 
       {/* ── SIMULATION TRAINING ──────────────────────────────── */}
-      <section className="py-20 bg-white" style={{ zIndex: 10 }}>
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -428,7 +432,10 @@ export function Home() {
             </div>
 
             {/* Visual card */}
-            <div className="bg-[#F5F7FA] border border-[#E5E7EB] rounded-lg p-10 flex flex-col items-center justify-center min-h-[320px] text-center">
+            <div
+              className="bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-10 flex flex-col items-center justify-center min-h-[320px] text-center group"
+              style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease", position: "relative", zIndex: 3 }}
+            >
               <div className="w-20 h-20 bg-white border border-[#E5E7EB] rounded-full flex items-center justify-center mb-5 shadow-[0_4px_12px_rgba(0,0,0,0.06)]">
                 <img
                   src="/images/shadow-logo.png"
@@ -441,7 +448,7 @@ export function Home() {
               </div>
               <div className="mt-6 w-full max-w-xs space-y-2">
                 {["CPR / AED Simulation", "Active Shooter Simulation", "Tactical Training Simulation"].map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm text-[#6B7280] bg-white border border-[#E5E7EB] rounded px-3 py-2">
+                  <div key={item} className="flex items-center gap-2 text-sm text-[#6B7280] bg-white/60 group-hover:bg-white border border-[#E5E7EB] rounded px-3 py-2" style={{ transition: "background-color 200ms ease" }}>
                     <div className="w-1.5 h-1.5 bg-[#C9A96E]/60 rounded-full" />
                     {item}
                   </div>
@@ -453,7 +460,7 @@ export function Home() {
       </section>
 
       {/* ── WHY CHOOSE US ────────────────────────────────────── */}
-      <section className="py-20 bg-[#F5F7FA]" style={{ zIndex: 10 }}>
+      <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <h2
@@ -471,7 +478,8 @@ export function Home() {
             {whyUs.map((w) => (
               <div
                 key={w.title}
-                className="bg-white border border-[#E5E7EB] rounded-lg p-6 flex items-start gap-4 hover:border-[#C9A96E]/40 hover:shadow-[0_4px_12px_rgba(201,169,110,0.08)] transition-all duration-300 group"
+                className="bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-6 flex items-start gap-4 hover:border-[#C9A96E]/40 hover:shadow-[0_4px_12px_rgba(201,169,110,0.08)] group"
+                style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease", position: "relative", zIndex: 3 }}
               >
                 <div className="w-10 h-10 bg-[#F5F7FA] border border-[#E5E7EB] rounded flex items-center justify-center flex-shrink-0 group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] transition-all duration-300">
                   <w.icon className="w-5 h-5 text-[#C9A96E] group-hover:text-white transition-colors duration-300" />

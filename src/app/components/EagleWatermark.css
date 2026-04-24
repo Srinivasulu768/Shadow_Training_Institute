@@ -77,10 +77,10 @@
   --eagle-scale: 1.0;
   --eagle-dur: 0.55s;
   --eagle-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  opacity: 0.92;
-  filter: blur(0px) brightness(1.15)
-                    drop-shadow(0 0 28px rgba(201, 168, 76, 0.55))
-                    drop-shadow(0 0 60px rgba(201, 168, 76, 0.25));
+  opacity: 0.55;
+  filter: blur(0px) brightness(1.10)
+                    drop-shadow(0 0 20px rgba(201, 168, 76, 0.30))
+                    drop-shadow(0 0 40px rgba(201, 168, 76, 0.12));
 }
 .eagle-emerge .eagle-glow {
   opacity: 1;
@@ -100,7 +100,7 @@
   --eagle-scale: 1.08;
   --eagle-dur: 0.9s;
   --eagle-ease: ease-in-out;
-  opacity: 0.22;
+  opacity: 0.06;
   filter: blur(2px);
 }
 .eagle-recede .eagle-glow  { opacity: 0; transform: scale(1.2); }
@@ -113,10 +113,9 @@
   --eagle-scale: 1.0;
   --eagle-dur: 1.2s;
   --eagle-ease: ease-in-out;
-  opacity: 0.62;
-  filter: blur(0px) brightness(1.1)
-                    drop-shadow(0 0 32px rgba(201, 168, 76, 0.32))
-                    drop-shadow(0 0 70px rgba(201, 168, 76, 0.12));
+  opacity: 0.28;
+  filter: blur(0px) brightness(1.05)
+                    drop-shadow(0 0 20px rgba(201, 168, 76, 0.22));
 }
 .eagle-settled .eagle-glow  { opacity: 0; }
 .eagle-settled .eagle-sheen { opacity: 0; }
@@ -137,8 +136,8 @@
    Reduced motion — static faint watermark, no animation
 ───────────────────────────────────────────────────────────── */
 .eagle-reduced {
-  opacity: 0.55;
-  filter: blur(0px) brightness(1.08) drop-shadow(0 0 24px rgba(201, 168, 76, 0.30));
+  opacity: 0.28;
+  filter: blur(0px) brightness(1.05) drop-shadow(0 0 16px rgba(201, 168, 76, 0.18));
   animation: none !important;
   transition: none !important;
 }
