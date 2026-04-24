@@ -1,0 +1,163 @@
+/* ─────────────────────────────────────────────────────────────
+   Eagle Watermark — Cinematic Entrance
+   z-index: 2  (above bg:0, below content:10)
+───────────────────────────────────────────────────────────── */
+
+.eagle-watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(560px, 120%);
+  height: min(640px, 115vw);
+  transform: translate(-50%, -50%)
+             translate(var(--mx, 0px), var(--my, 0px))
+             scale(var(--eagle-scale, 0.95));
+  z-index: 2;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity, filter;
+  transition:
+    opacity    var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out),
+    filter     var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out),
+    transform  var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out);
+}
+
+/* ── Image ── */
+.eagle-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Gold radial glow ── */
+.eagle-glow {
+  position: absolute;
+  inset: -15%;
+  border-radius: 50%;
+  /* background: radial-gradient(
+    ellipse at center,
+    rgba(219, 190, 111, 0.28) 0%,
+    rgba(201, 168, 76, 0.10) 40%,
+    transparent 70%
+  ); */
+  opacity: 0;
+  transform: scale(0.6);
+  transition:
+    opacity 0.9s ease-out,
+    transform 0.9s ease-out;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Metallic sheen sweep — disabled ── */
+.eagle-sheen {
+  display: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PHASE 1 — Prelude: ghost
+───────────────────────────────────────────────────────────── */
+.eagle-prelude {
+  --eagle-scale: 0.95;
+  --eagle-dur: 0.6s;
+  --eagle-ease: ease-out;
+  opacity: 0.06;
+  filter: blur(22px);
+}
+.eagle-prelude .eagle-glow  { opacity: 0; transform: scale(0.6); }
+.eagle-prelude .eagle-sheen { opacity: 0; transform: translateX(-120%); }
+
+/* ─────────────────────────────────────────────────────────────
+   PHASE 2 — Emerge: cinematic snap into focus
+───────────────────────────────────────────────────────────── */
+.eagle-emerge {
+  --eagle-scale: 1.0;
+  --eagle-dur: 0.55s;
+  --eagle-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0.92;
+  filter: blur(0px) brightness(1.15)
+                    drop-shadow(0 0 28px rgba(201, 168, 76, 0.55))
+                    drop-shadow(0 0 60px rgba(201, 168, 76, 0.25));
+}
+.eagle-emerge .eagle-glow {
+  opacity: 1;
+  transform: scale(1);
+}
+/* Sheen fires once during emerge */
+.eagle-emerge .eagle-sheen {
+  opacity: 1;
+  transform: translateX(120%);
+  transition: opacity 0.1s, transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   PHASE 3 — Recede: push back into depth
+───────────────────────────────────────────────────────────── */
+.eagle-recede {
+  --eagle-scale: 1.08;
+  --eagle-dur: 0.9s;
+  --eagle-ease: ease-in-out;
+  opacity: 0.22;
+  filter: blur(2px);
+}
+.eagle-recede .eagle-glow  { opacity: 0; transform: scale(1.2); }
+.eagle-recede .eagle-sheen { opacity: 0; transform: translateX(120%); }
+
+/* ─────────────────────────────────────────────────────────────
+   PHASE 4 — Settled: permanent breathing watermark
+───────────────────────────────────────────────────────────── */
+.eagle-settled {
+  --eagle-scale: 1.0;
+  --eagle-dur: 1.2s;
+  --eagle-ease: ease-in-out;
+  opacity: 0.62;
+  filter: blur(0px) brightness(1.1)
+                    drop-shadow(0 0 32px rgba(201, 168, 76, 0.32))
+                    drop-shadow(0 0 70px rgba(201, 168, 76, 0.12));
+}
+.eagle-settled .eagle-glow  { opacity: 0; }
+.eagle-settled .eagle-sheen { opacity: 0; }
+
+/* ─────────────────────────────────────────────────────────────
+   Footer clip — hide eagle when footer enters viewport
+───────────────────────────────────────────────────────────── */
+.eagle-clip-footer {
+  clip-path: inset(0 0 100% 0);
+  transition:
+    clip-path 0.5s ease-in-out,
+    opacity    var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out),
+    filter     var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out),
+    transform  var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Reduced motion — static faint watermark, no animation
+───────────────────────────────────────────────────────────── */
+.eagle-reduced {
+  opacity: 0.55;
+  filter: blur(0px) brightness(1.08) drop-shadow(0 0 24px rgba(201, 168, 76, 0.30));
+  animation: none !important;
+  transition: none !important;
+}
+.eagle-reduced .eagle-glow,
+.eagle-reduced .eagle-sheen { display: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   Mobile — lighter, faster
+───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .eagle-watermark {
+    width: min(260px, 80vw);
+    height: min(260px, 80vw);
+  }
+  .eagle-emerge {
+    --eagle-dur: 0.4s;
+    filter: blur(0px) brightness(1.12) drop-shadow(0 0 18px rgba(201, 168, 76, 0.45));
+  }
+  .eagle-settled {
+    animation-duration: 12s;
+  }
+}

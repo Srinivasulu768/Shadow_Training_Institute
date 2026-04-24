@@ -1,0 +1,112 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+
+  /* ═══════════════════════════════════════════════════════════════
+     MILITARY-GRADE ENTERPRISE THEME
+     Tactical Design System with Eagle Logo Integration
+     ═══════════════════════════════════════════════════════════════ */
+
+  /* ─── PRIMARY BACKGROUNDS (Deep Charcoal Black) ─── */
+  --background: #0F1419;           /* Main background - deep charcoal */
+  --background-secondary: #131820; /* Slightly elevated sections */
+  --background-tertiary: #1a1f2e;  /* Cards and elevated surfaces */
+
+  /* ─── FOREGROUND & TEXT ─── */
+  --foreground: #FFFFFF;           /* Primary text - pure white */
+  --foreground-secondary: #E8EAED; /* Secondary text - light gray */
+  --foreground-muted: #A8ACBA;     /* Muted text - medium gray */
+
+  /* ─── CARD & CONTAINER SURFACES ─── */
+  --card: #131820;                 /* Card background */
+  --card-foreground: #FFFFFF;      /* Card text */
+  --card-border: rgba(212, 175, 55, 0.08); /* Subtle gold border */
+
+  /* ─── POPOVER & DROPDOWN ─── */
+  --popover: #1a1f2e;              /* Popover background */
+  --popover-foreground: #FFFFFF;   /* Popover text */
+
+  /* ─── PRIMARY ACCENT (Antique Gold from Logo) ─── */
+  --primary: #D4AF37;              /* Antique gold - primary accent */
+  --primary-foreground: #0F1419;   /* Text on gold background */
+  --primary-hover: #C9A227;        /* Gold hover state */
+  --primary-active: #B8963E;       /* Gold active state */
+  --primary-subtle: rgba(212, 175, 55, 0.12); /* Gold with opacity for backgrounds */
+
+  /* ─── SECONDARY ACCENT (Subtle Brown from Eagle) ─── */
+  --secondary: #3D3428;            /* Warm brown - depth only */
+  --secondary-foreground: #FFFFFF; /* Text on secondary */
+  --secondary-hover: #4A3F35;      /* Brown hover state */
+
+  /* ─── MUTED & DISABLED STATES ─── */
+  --muted: #2A2E38;                /* Muted background */
+  --muted-foreground: #A8ACBA;     /* Muted text */
+
+  /* ─── ACCENT & INTERACTIVE ─── */
+  --accent: #D4AF37;               /* Same as primary for consistency */
+  --accent-foreground: #0F1419;    /* Text on accent */
+
+  /* ─── DESTRUCTIVE & ERROR ─── */
+  --destructive: #DC2626;          /* Red for errors/destructive actions */
+  --destructive-foreground: #FFFFFF;
+
+  /* ─── BORDERS & DIVIDERS ─── */
+  --border: rgba(212, 175, 55, 0.08);      /* Subtle gold border */
+  --border-secondary: rgba(168, 172, 186, 0.12); /* Gray border */
+  --border-muted: rgba(168, 172, 186, 0.06);    /* Very subtle border */
+
+  /* ─── INPUT & FORM ELEMENTS ─── */
+  --input: transparent;
+  --input-background: #1a1f2e;
+  --input-border: rgba(212, 175, 55, 0.12);
+  --input-border-focus: rgba(212, 175, 55, 0.4);
+  --input-placeholder: #6B7280;
+
+  /* ─── SWITCH & TOGGLE ─── */
+  --switch-background: #2A2E38;
+  --switch-active: #D4AF37;
+
+  /* ─── FOCUS & RING ─── */
+  --ring: #D4AF37;
+  --ring-offset: #0F1419;
+
+  /* ─── TYPOGRAPHY ─── */
+  --font-weight-medium: 600;
+  --font-weight-normal: 400;
+
+  /* ─── SPACING & RADIUS ─── */
+  --radius: 0.5rem;
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+
+  /* ═══════════════════════════════════════════════════════════════
+     LEGACY BRAND COLORS (for backward compatibility)
+     ═══════════════════════════════════════════════════════════════ */
+  --brand-dark: #0F1419;
+  --brand-darker: #0A0D12;
+  --brand-mid: #131820;
+  --brand-warm: #3D3428;
+  --brand-gold: #D4AF37;
+  --brand-gold-hover: #C9A227;
+  --brand-gold-active: #B8963E;
+  --brand-white: #FFFFFF;
+  --brand-gray: #A8ACBA;
+  --brand-gray-light: #E8EAED;
+
+  /* ═══════════════════════════════════════════════════════════════
+     SHADOW & ELEVATION SYSTEM
+     ═══════════════════════════════════════════════════════════════ */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.6);
+  --shadow-gold: 0 0 20px rgba(212, 175, 55, 0.15);
+
+  /* ═══════════════════════════════════════════════════════════════
+     EAGLE WATERMARK INTEGRATION
+     ═══════════════════════════════════════════════════════════════ */
+  --eagle-opacity: 0.04;
+  --eagle-glow-color: rgba(212, 175, 55, 0.1);
+}
