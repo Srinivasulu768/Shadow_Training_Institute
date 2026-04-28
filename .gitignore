@@ -2,3 +2,4 @@ node_modules/
 .kiro/
 .vscode/
 guidelines/
+dist/

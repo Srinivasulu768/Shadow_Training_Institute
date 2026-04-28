@@ -4,15 +4,17 @@
 @import 'tw-animate-css';
 
 @theme {
-  --color-brand-bg: var(--brand-bg);
-  --color-brand-surface: var(--brand-surface);
-  --color-brand-muted: var(--brand-muted);
-  --color-brand-gold: var(--brand-gold);
-  --color-brand-gold-hover: var(--brand-gold-hover);
-  --color-brand-text: var(--brand-text);
+  --color-brand-bg:             var(--brand-bg);
+  --color-brand-surface:        var(--brand-surface);
+  --color-brand-card:           var(--brand-card);
+  --color-brand-gold:           var(--brand-gold);
+  --color-brand-gold-hover:     var(--brand-gold-hover);
+  --color-brand-gold-active:    var(--brand-gold-active);
+  --color-brand-steel:          var(--brand-steel);
+  --color-brand-text:           var(--brand-text);
   --color-brand-text-secondary: var(--brand-text-secondary);
-  --color-brand-text-muted: var(--brand-text-muted);
-  --color-brand-text-subtle: var(--brand-text-subtle);
-  --color-brand-border: var(--brand-border);
-  --color-brand-border-secondary: var(--brand-border-secondary);
+  --color-brand-text-muted:     var(--brand-text-muted);
+  --color-brand-text-subtle:    var(--brand-text-subtle);
+  --color-brand-border:         var(--brand-border);
+  --color-brand-divider:        var(--brand-divider);
 }

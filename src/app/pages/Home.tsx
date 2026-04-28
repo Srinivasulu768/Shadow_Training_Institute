@@ -1,518 +1,823 @@
 import { Link } from "react-router";
+import { motion } from "framer-motion";
 import {
-  BookOpen, Target, Users, Brain, GraduationCap,
-  Heart, Shield, Siren, Activity, Award,
-  CheckCircle, ArrowRight, Building2, User, Stethoscope,
-  Star, Clock, BadgeCheck,
+  BookOpen, Target, Brain, GraduationCap,
+  Heart, Shield, Activity, Award, Users,
+  CheckCircle, ArrowRight,
+  Star, TrendingUp, Zap, ChevronLeft, ChevronRight,
 } from "lucide-react";
-import { EagleWatermark } from "../components/EagleWatermark";
+import { useState } from "react";
+import { AnimatedCard, FadeUp, FadeIn, EASE_OUT } from "../components/AnimatedCard";
 
-const audiences = [
-  {
-    icon: User,
-    title: "Individuals",
-    description: "Gain life-saving skills and personal protection training to respond confidently in emergencies.",
-    link: "/programs",
-  },
-  {
-    icon: Building2,
-    title: "Corporates",
-    description: "Comprehensive safety and emergency response training for teams, customized to your organization.",
-    link: "/partnerships",
-  },
-  {
-    icon: Stethoscope,
-    title: "Healthcare",
-    description: "Advanced medical emergency training for healthcare professionals in high-stress clinical environments.",
-    link: "/programs",
-  },
-  {
-    icon: Shield,
-    title: "Security Teams",
-    description: "Elite tactical training and active threat response for security professionals and first responders.",
-    link: "/simulation",
-  },
-];
+/* ── design tokens ── */
+const NAVY      = "rgb(13, 27, 62)";
+const NAVY_MID  = "rgb(18, 40, 90)";
+const NAVY_CARD = "rgb(22, 48, 105)";
+const BLUE      = "rgb(37, 99, 235)";
+const BLUE_SOFT = "rgba(37, 99, 235, 0.10)";
+const WHITE     = "#ffffff";
+const BG_LIGHT  = "rgb(243, 246, 251)";
+const TEXT      = "rgb(15, 23, 42)";
+const TEXT_BODY = "rgb(71, 85, 105)";
+const TEXT_MUT  = "rgb(148, 163, 184)";
+const BORDER    = "rgba(0,0,0,0.07)";
+const GOLD      = "rgb(198, 169, 74)";
 
 const methodologies = [
-  {
-    icon: BookOpen,
-    title: "Blended Learning",
-    description: "Online theory combined with hands-on practical application for maximum retention.",
-    link: "/methodology#blended-learning",
-  },
-  {
-    icon: Target,
-    title: "Problem-Based Learning",
-    description: "Real-world scenarios that challenge critical thinking and decision-making under pressure.",
-    link: "/methodology#problem-based",
-  },
-  {
-    icon: Users,
-    title: "Scenario-Based Training",
-    description: "Immersive environments that replicate actual emergency and tactical situations.",
-    link: "/methodology#scenario-based",
-  },
-  {
-    icon: Brain,
-    title: "Stress Inoculation",
-    description: "Progressive exposure to high-pressure situations to build psychological resilience.",
-    link: "/methodology#stress-inoculation",
-  },
-  {
-    icon: GraduationCap,
-    title: "Adult Learning Principles",
-    description: "Building on existing knowledge and professional experience for accelerated growth.",
-    link: "/methodology#adult-learning",
-  },
+  { icon: BookOpen,      title: "Blended Learning",         desc: "Online theory + hands-on practice" },
+  { icon: Brain,         title: "Problem-Based Learning",   desc: "Real-world critical thinking scenarios" },
+  { icon: Target,        title: "Scenario-Based Training",  desc: "Immersive emergency simulations" },
+  { icon: Zap,           title: "Stress Inoculation",       desc: "Performance under pressure training" },
+  { icon: GraduationCap, title: "Adult Learning",           desc: "Experience-centered education" },
 ];
 
-const programs = [
+const heroSlides = [
   {
     icon: Heart,
-    title: "CPR / AED / First Aid",
-    description: "Life-saving techniques for cardiac emergencies and basic first aid response.",
-    bullets: ["Adult, Child & Infant CPR", "AED operation & safety", "Wound care & bandaging"],
-    duration: "4–8 hrs",
-    cert: "ALERRT Aligned",
+    title: "Safety Programs",
+    desc: "Life-saving skills including CPR, First Aid, and more",
     link: "/programs#cpr-aed",
-  },
-  {
-    icon: Activity,
-    title: "Stop the Bleed",
-    description: "Critical hemorrhage control training developed by the Department of Homeland Security.",
-    bullets: ["Tourniquet application", "Wound packing procedures", "Hemorrhage assessment"],
-    duration: "2 hrs",
-    cert: "ALERRT Aligned",
-    link: "/programs#stop-the-bleed",
+    img: "/images/sti4.jpg",
   },
   {
     icon: Shield,
-    title: "CPI – Crisis Prevention",
-    description: "Evidence-based de-escalation and crisis intervention for high-stress environments.",
-    bullets: ["Verbal de-escalation", "Behavioral assessment", "Safe physical intervention"],
-    duration: "1–2 days",
-    cert: "ALERRT Aligned",
+    title: "Crisis Prevention",
+    desc: "De-escalation and crisis intervention training",
     link: "/programs#cpi-crisis",
-  },
-  {
-    icon: Siren,
-    title: "Active Shooter Response",
-    description: "Advanced training aligned with ALERRT protocols for active threat situations.",
-    bullets: ["Run-Hide-Fight protocols", "Situational awareness", "Emergency coordination"],
-    duration: "4–8 hrs",
-    cert: "ALERRT Aligned",
-    link: "/programs#active-shooter",
+    img: "/images/sti6.jpg",
   },
   {
     icon: Target,
     title: "Tactical Training",
-    description: "Elite security and protection protocols for high-risk professional environments.",
-    bullets: ["Threat assessment", "Protective operations", "Team tactics"],
-    duration: "Custom",
-    cert: "ALERRT Aligned",
+    desc: "Elite security and protection protocols",
     link: "/programs#tactical-training",
+    img: "/images/sti8.jpg",
   },
   {
-    icon: Award,
-    title: "Continuing Education",
-    description: "Advanced courses and recertification programs for ongoing professional development.",
-    bullets: ["CEU credit programs", "Recertification courses", "Specialty modules"],
-    duration: "Varies",
-    cert: "ALERRT Aligned",
-    link: "/programs#continuing-education",
+    icon: Activity,
+    title: "Stop the Bleed",
+    desc: "Critical hemorrhage control and emergency response",
+    link: "/programs#stop-the-bleed",
+    img: "/images/sti5.jpg",
   },
 ];
 
-const whyUs = [
-  { icon: BadgeCheck, title: "Nationally Certified", text: "All programs meet or exceed national certification standards." },
-  { icon: Users, title: "Expert Instructors", text: "Certified professionals with real-world operational experience." },
-  { icon: Target, title: "Scenario-Based", text: "Training built around realistic, high-fidelity simulations." },
-  { icon: Clock, title: "Flexible Scheduling", text: "On-site, off-site, and custom scheduling to fit your team." },
-  { icon: Building2, title: "Corporate Solutions", text: "Tailored programs for organizations of any size or sector." },
+const whyItems = [
+  { icon: Award,      title: "Certified Instructors",   desc: "All instructors hold active certifications and real-world operational experience." },
+  { icon: Target,     title: "Expert Instructors",      desc: "Industry veterans with hands-on field experience across multiple disciplines." },
+  { icon: TrendingUp, title: "Effective Focus",         desc: "Evidence-based curriculum designed for maximum skill retention and application." },
+  { icon: Zap,        title: "Proven Results",          desc: "98% certification rate with thousands of professionals trained nationwide." },
 ];
 
 
+const testimonials = [
+  {
+    quote: "The training programs at Shadow Training Institute transformed the way our team responds to emergencies. Our staff now feels confident and prepared for any situation.",
+    name: "Michael Rodriguez",
+    title: "Security Director, Fortune 500",
+  },
+  {
+    quote: "Exceptional instructors with real-world experience. The scenario-based training was incredibly realistic and directly applicable to our daily operations.",
+    name: "Sarah Chen",
+    title: "Healthcare Administrator",
+  },
+  {
+    quote: "Best investment we've made in our team's safety. The ALERRT-aligned curriculum gave our staff the tools they need to respond effectively under pressure.",
+    name: "James Thompson",
+    title: "Corporate Safety Manager",
+  },
+];
+
 export function Home() {
+  const [activeTestimonial, setActiveTestimonial] = useState(0);
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  const prevSlide = () => setActiveSlide((s) => (s - 1 + heroSlides.length) % heroSlides.length);
+  const nextSlide = () => setActiveSlide((s) => (s + 1) % heroSlides.length);
+
   return (
-    <div
-      style={{
-        fontFamily: "'Lato', sans-serif",
-        backgroundColor: "#FFFFFF",
-      }}
-    >
-      {/* Cinematic eagle watermark — fixed, z-index 2 */}
-      <EagleWatermark />
+    <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: WHITE }}>
 
-      {/* ── HERO ─────────────────────────────────────────────── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white" style={{ zIndex: 10 }}>
-        {/* ── HERO CONTENT — centered ── */}
-        <div className="relative z-10 flex flex-col items-center text-center px-8 sm:px-12 lg:px-16 xl:px-24 py-32 w-full max-w-3xl mx-auto">
+      {/* ══ HERO ══ */}
+      <section
+        className="relative overflow-hidden"
+        style={{
+          background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`,
+          minHeight: "100vh",
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        {/* subtle dot grid */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px)",
+            backgroundSize: "32px 32px",
+          }}
+        />
 
-          {/* Hero headline */}
-          <h1
-            className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#1F2937] mb-6 leading-[1.1] tracking-tight"
-            style={{ fontFamily: "'Open Sans', sans-serif" }}
-          >
-            Train for Reality.
-            <br />
-            <span className="text-[#C9A96E]">Not Theory.</span>
-          </h1>
+        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 sm:px-10 lg:px-16 py-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
 
-          <p className="text-base sm:text-lg text-[#6B7280] mb-8 max-w-xl leading-relaxed">
-            Real-world emergency and tactical training for professionals who need to perform when it matters most.
-          </p>
-
-          {/* CTAs */}
-          <div className="flex flex-col sm:flex-row gap-4 mb-12">
-            <Link
-              to="/programs"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C9A96E] text-white text-base font-bold rounded hover:bg-[#B8965D] transition-all hover:shadow-[0_4px_20px_rgba(201,169,110,0.30)] min-h-[48px]"
+            {/* LEFT — text */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, ease: EASE_OUT }}
             >
-              View Programs
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#D1D5DB] text-[#374151] text-base font-bold rounded hover:border-[#C9A96E] hover:text-[#C9A96E] transition-all min-h-[48px]"
-            >
-              Request Training
-            </Link>
-          </div>
+              {/* label */}
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-8 h-0.5" style={{ backgroundColor: GOLD }} />
+                <span className="text-xs font-bold tracking-[0.20em] uppercase" style={{ color: GOLD }}>
+                  Enterprise Training
+                </span>
+              </div>
 
-          {/* Trust indicators */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            {[
-              { icon: BadgeCheck, label: "Nationally Certified", desc: "ALERRT Aligned" },
-              { icon: Users, label: "Expert Instructors", desc: "Real-world experience" },
-              { icon: Target, label: "Scenario-Based", desc: "High-fidelity training" },
-              { icon: Shield, label: "Enterprise Ready", desc: "Corporate solutions" },
-            ].map((item, idx) => (
-              <div key={idx} className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded flex items-center justify-center bg-[#C9A96E]/10 border border-[#C9A96E]/20 flex-shrink-0 mt-0.5">
-                  <item.icon className="w-4 h-4 text-[#C9A96E]" />
+              <h1
+                className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-[1.08]"
+                style={{ fontFamily: "'Open Sans', sans-serif", color: WHITE }}
+              >
+                Transform Your<br />
+                Workforce with<br />
+                Enterprise-Grade<br />
+                Training
+              </h1>
+
+              <p className="text-base leading-relaxed mb-8 max-w-md" style={{ color: "rgba(255,255,255,0.65)" }}>
+                Delivering world-class training programs that elevate safety, performance, and readiness across organizations of all sizes.
+              </p>
+
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3 mb-10">
+                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: EASE_OUT }}>
+                  <Link
+                    to="/programs"
+                    className="inline-flex items-center justify-center px-7 py-3 text-sm font-bold rounded-md"
+                    style={{ background: BLUE, color: WHITE, boxShadow: "0 4px 16px rgba(37,99,235,0.40)", transition: "box-shadow 0.25s ease" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 24px rgba(37,99,235,0.55)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 16px rgba(37,99,235,0.40)"; }}
+                  >
+                    Explore Programs
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: EASE_OUT }}>
+                  <Link
+                    to="/contact"
+                    className="inline-flex items-center justify-center px-7 py-3 text-sm font-bold rounded-md transition-all"
+                    style={{ border: "1px solid rgba(255,255,255,0.30)", color: WHITE, background: "transparent" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                  >
+                    Book Consultation
+                  </Link>
+                </motion.div>
+              </div>
+
+              {/* Stats */}
+              <div className="flex gap-8">
+                {[
+                  { value: "500+",  label: "Organizations" },
+                  { value: "10k+",  label: "Trained" },
+                  { value: "95%",   label: "Satisfaction" },
+                ].map((s, i) => (
+                  <motion.div
+                    key={s.label}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.6 + i * 0.1, ease: EASE_OUT }}
+                  >
+                    <div className="text-2xl font-extrabold" style={{ color: WHITE, fontFamily: "'Open Sans', sans-serif" }}>
+                      {s.value}
+                    </div>
+                    <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>{s.label}</div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* RIGHT — card carousel */}
+            <motion.div
+              className="relative flex flex-col items-end"
+              initial={{ opacity: 0, x: 30 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7, delay: 0.15, ease: EASE_OUT }}
+            >
+              {/* Card */}
+              <Link
+                to={heroSlides[activeSlide].link}
+                className="relative w-full max-w-sm rounded-2xl overflow-hidden block"
+                style={{
+                  background: NAVY_CARD,
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  boxShadow: "0 24px 60px rgba(0,0,0,0.40)",
+                  minHeight: "380px",
+                  textDecoration: "none",
+                }}
+              >
+                {/* image fills top */}
+                <div className="w-full" style={{ height: "240px", overflow: "hidden" }}>
+                  <img
+                    src={heroSlides[activeSlide].img}
+                    alt={heroSlides[activeSlide].title}
+                    className="w-full h-full object-cover transition-all duration-500"
+                    style={{ opacity: 0.75 }}
+                  />
                 </div>
-                <div className="text-left">
-                  <div className="text-xs font-bold text-[#1F2937] uppercase tracking-wide">{item.label}</div>
-                  <div className="text-xs text-[#9CA3AF]">{item.desc}</div>
+                {/* text at bottom */}
+                <div className="p-6">
+                  <h3 className="text-xl font-bold mb-2" style={{ color: WHITE, fontFamily: "'Open Sans', sans-serif" }}>
+                    {heroSlides[activeSlide].title}
+                  </h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.60)" }}>
+                    {heroSlides[activeSlide].desc}
+                  </p>
+                </div>
+              </Link>
+
+              {/* Controls row */}
+              <div className="flex items-center justify-between w-full max-w-sm mt-4">
+                {/* dots */}
+                <div className="flex items-center gap-2">
+                  {heroSlides.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveSlide(i)}
+                      className="rounded-full transition-all"
+                      style={{
+                        width: i === activeSlide ? "28px" : "8px",
+                        height: "8px",
+                        backgroundColor: i === activeSlide ? GOLD : "rgba(255,255,255,0.25)",
+                      }}
+                    />
+                  ))}
+                </div>
+                {/* arrows */}
+                <div className="flex gap-2">
+                  <button
+                    onClick={prevSlide}
+                    className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+                    style={{ border: "1px solid rgba(255,255,255,0.20)", color: WHITE, background: "transparent" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.10)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <ChevronLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={nextSlide}
+                    className="w-9 h-9 rounded-full flex items-center justify-center transition-all"
+                    style={{ border: "1px solid rgba(255,255,255,0.20)", color: WHITE, background: "transparent" }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.10)"; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </button>
                 </div>
               </div>
-            ))}
+            </motion.div>
+
           </div>
         </div>
       </section>
 
-      {/* ── WHO WE TRAIN ─────────────────────────────────────── */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <h2
-              className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4"
-              style={{ fontFamily: "'Open Sans', sans-serif" }}
-            >
-              Who We <span className="text-[#C9A96E]">Train</span>
+      {/* ══ LEARNING METHODOLOGIES ══ */}
+      <section className="py-20 overflow-hidden" style={{ backgroundColor: WHITE }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Open Sans', sans-serif", color: TEXT }}>
+              Learning Methodologies
             </h2>
-            <p className="text-[#6B7280] text-lg max-w-2xl mx-auto">
-              Specialized programs tailored to your profession and requirements.
+            <p className="text-base max-w-xl mx-auto" style={{ color: TEXT_BODY }}>
+              Evidence-based approaches that drive measurable results
             </p>
-          </div>
+          </FadeIn>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {audiences.map((a) => (
-              <Link
-                key={a.title}
-                to={a.link}
-                className="group relative bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-7 hover:border-[#C9A96E]/50 hover:-translate-y-1 shadow-[0_4px_12px_rgba(0,0,0,0.05)] hover:shadow-[0_8px_24px_rgba(201,169,110,0.12)]"
-                style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease, transform 200ms ease", position: "relative", zIndex: 3 }}
+        {/* ── Infinite marquee track ── */}
+        <div
+          className="relative"
+          style={{ overflow: "hidden" }}
+          /* pause on hover */
+          onMouseEnter={(e) => {
+            const track = e.currentTarget.querySelector<HTMLDivElement>(".marquee-track");
+            if (track) track.style.animationPlayState = "paused";
+          }}
+          onMouseLeave={(e) => {
+            const track = e.currentTarget.querySelector<HTMLDivElement>(".marquee-track");
+            if (track) track.style.animationPlayState = "running";
+          }}
+        >
+          {/* fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to right, #ffffff, transparent)" }} />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: "linear-gradient(to left, #ffffff, transparent)" }} />
+
+          <div
+            className="marquee-track flex gap-5"
+            style={{
+              width: "max-content",
+              animation: "marquee-scroll 28s linear infinite",
+              willChange: "transform",
+            }}
+          >
+            {/* duplicate the list twice for seamless loop */}
+            {[...methodologies, ...methodologies].map((m, i) => (
+              <motion.div
+                key={`${m.title}-${i}`}
+                className="rounded-2xl p-6 cursor-default overflow-hidden relative flex-shrink-0"
+                style={{
+                  backgroundColor: BG_LIGHT,
+                  border: `1px solid ${BORDER}`,
+                  width: "200px",
+                }}
+                whileHover={{
+                  y: -7,
+                  scale: 1.03,
+                  boxShadow: "0 16px 40px rgba(37,99,235,0.14)",
+                  borderColor: "rgba(37,99,235,0.25)",
+                }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.25, ease: EASE_OUT }}
               >
-                <div className="w-12 h-12 bg-[#F3F4F6] border border-[#E5E7EB] rounded-lg flex items-center justify-center mb-5 group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] transition-all duration-300">
-                  <a.icon className="w-6 h-6 text-[#C9A96E] group-hover:text-white transition-colors duration-300" />
-                </div>
-                <h3
-                  className="text-lg font-bold text-[#1F2937] mb-2 group-hover:text-[#C9A96E] transition-colors"
-                  style={{ fontFamily: "'Open Sans', sans-serif" }}
+                {/* shimmer on hover */}
+                <motion.div
+                  className="absolute inset-0 pointer-events-none rounded-2xl"
+                  style={{
+                    background: "linear-gradient(110deg, transparent 30%, rgba(37,99,235,0.07) 50%, transparent 70%)",
+                    backgroundSize: "200% 100%",
+                    backgroundPosition: "200% 0",
+                  }}
+                  whileHover={{ backgroundPosition: "-200% 0" }}
+                  transition={{ duration: 0.55, ease: "easeOut" }}
+                />
+                {/* icon */}
+                <motion.div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                  style={{ backgroundColor: BLUE }}
+                  whileHover={{ scale: 1.1, rotate: 4 }}
+                  transition={{ duration: 0.22, ease: EASE_OUT }}
                 >
-                  {a.title}
-                </h3>
-                <p className="text-[#6B7280] text-sm leading-relaxed">{a.description}</p>
+                  <m.icon className="w-6 h-6" style={{ color: WHITE }} />
+                </motion.div>
+                <h3 className="text-sm font-bold leading-snug mb-1" style={{ color: TEXT }}>{m.title}</h3>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_BODY }}>{m.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* keyframe injected inline */}
+        <style>{`
+          @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+        `}</style>
+      </section>
+
+      {/* ══ TRAINING PROGRAMS ══ */}
+      <section className="py-20 overflow-hidden" style={{ backgroundColor: BG_LIGHT }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Open Sans', sans-serif", color: TEXT }}>
+              Training Programs
+            </h2>
+            <p className="text-base max-w-xl mx-auto" style={{ color: TEXT_BODY }}>
+              Comprehensive programs designed for every professional need
+            </p>
+            <div className="w-12 h-1 rounded-full mx-auto mt-4" style={{ backgroundColor: BLUE }} />
+          </FadeIn>
+        </div>
+
+        {/* Reverse marquee */}
+        <div
+          className="relative mb-8"
+          style={{ overflow: "hidden" }}
+          onMouseEnter={(e) => { const t = e.currentTarget.querySelector<HTMLDivElement>(".marquee-rev"); if (t) t.style.animationPlayState = "paused"; }}
+          onMouseLeave={(e) => { const t = e.currentTarget.querySelector<HTMLDivElement>(".marquee-rev"); if (t) t.style.animationPlayState = "running"; }}
+        >
+          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: `linear-gradient(to right, ${BG_LIGHT}, transparent)` }} />
+          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
+            style={{ background: `linear-gradient(to left, ${BG_LIGHT}, transparent)` }} />
+
+          <div
+            className="marquee-rev flex gap-5"
+            style={{
+              width: "max-content",
+              animation: "marquee-scroll-rev 32s linear infinite",
+              willChange: "transform",
+            }}
+          >
+            {[...([
+              { icon: Heart,    title: "CPR / AED / First Aid",   duration: "4–8 hrs",  link: "/programs#cpr-aed" },
+              { icon: Activity, title: "Stop the Bleed",           duration: "2 hrs",    link: "/programs#stop-the-bleed" },
+              { icon: Shield,   title: "Active Shooter Response",  duration: "4–8 hrs",  link: "/programs#active-shooter" },
+              { icon: Target,   title: "Tactical Training",        duration: "Custom",   link: "/programs#tactical-training" },
+              { icon: Award,    title: "Continuing Education",     duration: "Varies",   link: "/programs#continuing-education" },
+            ]), ...([
+              { icon: Heart,    title: "CPR / AED / First Aid",   duration: "4–8 hrs",  link: "/programs#cpr-aed" },
+              { icon: Activity, title: "Stop the Bleed",           duration: "2 hrs",    link: "/programs#stop-the-bleed" },
+              { icon: Shield,   title: "Active Shooter Response",  duration: "4–8 hrs",  link: "/programs#active-shooter" },
+              { icon: Target,   title: "Tactical Training",        duration: "Custom",   link: "/programs#tactical-training" },
+              { icon: Award,    title: "Continuing Education",     duration: "Varies",   link: "/programs#continuing-education" },
+            ])].map((p, i) => (
+              <Link
+                key={`prog-${i}`}
+                to={p.link}
+                style={{ textDecoration: "none", flexShrink: 0 }}
+              >
+                <motion.div
+                  className="rounded-2xl p-6 overflow-hidden relative"
+                  style={{
+                    backgroundColor: WHITE,
+                    border: `1px solid ${BORDER}`,
+                    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+                    width: "220px",
+                  }}
+                  whileHover={{
+                    y: -7,
+                    scale: 1.03,
+                    boxShadow: "0 16px 40px rgba(37,99,235,0.14)",
+                    borderColor: "rgba(37,99,235,0.25)",
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.25, ease: EASE_OUT }}
+                >
+                  <motion.div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                    style={{ backgroundColor: BLUE }}
+                    whileHover={{ scale: 1.1, rotate: 4 }}
+                    transition={{ duration: 0.22, ease: EASE_OUT }}
+                  >
+                    <p.icon className="w-5 h-5" style={{ color: WHITE }} />
+                  </motion.div>
+                  <h3 className="text-sm font-bold mb-1" style={{ color: TEXT }}>{p.title}</h3>
+                  <p className="text-xs mb-3" style={{ color: TEXT_MUT }}>{p.duration}</p>
+                  <div className="flex items-center gap-1 text-xs font-bold" style={{ color: BLUE }}>
+                    Learn More <ArrowRight className="w-3 h-3" />
+                  </div>
+                </motion.div>
               </Link>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* ── TRAINING METHODOLOGY ─────────────────────────────── */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="inline-block px-3 py-1 bg-white border border-[#C9A96E]/25 rounded text-[#C9A96E] text-xs font-bold uppercase tracking-widest mb-4">
-              Our Approach
-            </span>
-            <h2
-              className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4"
-              style={{ fontFamily: "'Open Sans', sans-serif" }}
-            >
-              Training <span className="text-[#C9A96E]">Methodology</span>
-            </h2>
-            <p className="text-[#6B7280] text-lg max-w-2xl mx-auto">
-              Evidence-based methods proven to maximize retention and real-world performance.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5 mb-10">
-            {methodologies.map((m, i) => (
-              <div
-                key={m.title}
-                className="bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-6 hover:border-[#C9A96E]/40 hover:shadow-[0_4px_12px_rgba(0,0,0,0.05)] group"
-                style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease", position: "relative", zIndex: 3 }}
-              >
-                <div className="w-10 h-10 bg-white border border-[#E5E7EB] rounded flex items-center justify-center mb-4 group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] transition-all duration-300">
-                  <m.icon className="w-5 h-5 text-[#C9A96E] group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div className="text-[#C9A96E]/60 text-xs font-bold mb-1">0{i + 1}</div>
-                <h3
-                  className="text-base font-bold text-[#1F2937] mb-2"
-                  style={{ fontFamily: "'Open Sans', sans-serif" }}
-                >
-                  {m.title}
-                </h3>
-                <p className="text-[#6B7280] text-sm leading-relaxed">{m.description}</p>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link
-              to="/methodology"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white/60 hover:bg-white border border-[#D1D5DB] text-[#374151] text-sm font-bold rounded hover:border-[#C9A96E] hover:text-[#C9A96E]"
-              style={{ transition: "background-color 200ms ease, border-color 200ms ease, color 200ms ease", position: "relative", zIndex: 3 }}
-            >
-              Explore Our Methodology
-              <ArrowRight className="w-4 h-4" />
+        <FadeUp delay={0.3} className="text-center">
+          <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: EASE_OUT }} style={{ display: "inline-block" }}>
+            <Link to="/programs" className="inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-lg"
+              style={{ background: NAVY, color: WHITE, boxShadow: "0 4px 12px rgba(13,27,62,0.20)", transition: "box-shadow 0.25s ease" }}
+              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 20px rgba(13,27,62,0.30)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(13,27,62,0.20)"; }}>
+              View All Programs <ArrowRight className="w-4 h-4" />
             </Link>
-          </div>
-        </div>
+          </motion.div>
+        </FadeUp>
+
+        <style>{`
+          @keyframes marquee-scroll-rev {
+            0%   { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+          }
+        `}</style>
       </section>
 
-      {/* ── TRAINING PROGRAMS ────────────────────────────────── */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <span className="inline-block px-3 py-1 bg-white border border-[#C9A96E]/25 rounded text-[#C9A96E] text-xs font-bold uppercase tracking-widest mb-4">
-              Certification Programs
-            </span>
-            <h2
-              className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4"
-              style={{ fontFamily: "'Open Sans', sans-serif" }}
+      {/* ══ FEATURED PARTNERSHIP + SIMULATION ══ */}
+      <section className="py-20" style={{ backgroundColor: WHITE }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            {/* ALERRT */}
+            <AnimatedCard
+              delay={0}
+              className="rounded-xl p-7"
+              style={{ backgroundColor: WHITE, border: `1px solid ${BORDER}`, boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }}
             >
-              Training <span className="text-[#C9A96E]">Programs</span>
-            </h2>
-            <p className="text-[#6B7280] text-lg max-w-2xl mx-auto">
-              Nationally certified programs designed for real-world application.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {programs.map((p) => (
-              <div
-                key={p.title}
-                className="bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-7 flex flex-col hover:border-[#C9A96E]/40 hover:shadow-[0_4px_16px_rgba(201,169,110,0.08)] group"
-                style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease", position: "relative", zIndex: 3 }}
-              >
-                <div className="flex items-start justify-between mb-5">
-                  <div className="w-11 h-11 bg-[#F5F7FA] border border-[#E5E7EB] rounded flex items-center justify-center group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] transition-all duration-300">
-                    <p.icon className="w-5 h-5 text-[#C9A96E] group-hover:text-white transition-colors duration-300" />
-                  </div>
-                  <span className="text-xs text-[#C9A96E] bg-[#C9A96E]/10 border border-[#C9A96E]/20 px-2 py-1 rounded font-semibold">
-                    {p.duration}
-                  </span>
-                </div>
-
-                <h3
-                  className="text-lg font-bold text-[#1F2937] mb-2"
-                  style={{ fontFamily: "'Open Sans', sans-serif" }}
+              <div className="flex items-center gap-3 mb-4">
+                <motion.div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: BLUE_SOFT }}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.2, ease: EASE_OUT }}
                 >
-                  {p.title}
-                </h3>
-                <p className="text-[#6B7280] text-sm leading-relaxed mb-4">{p.description}</p>
-
-                <ul className="space-y-1.5 mb-5 flex-1">
-                  {p.bullets.map((b) => (
-                    <li key={b} className="flex items-center gap-2 text-sm text-[#374151]">
-                      <div className="w-1 h-1 bg-[#C9A96E] rounded-full flex-shrink-0" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex items-center justify-between pt-4 border-t border-[#E5E7EB]">
-                  <span className="text-xs text-[#9CA3AF]">{p.cert}</span>
-                  <Link
-                    to={p.link}
-                    className="inline-flex items-center gap-1.5 text-sm font-bold text-[#C9A96E] hover:gap-2.5 transition-all"
-                  >
-                    Enroll Now
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                </div>
+                  <Award className="w-5 h-5" style={{ color: BLUE }} />
+                </motion.div>
+                <h3 className="text-lg font-bold" style={{ color: TEXT }}>ALERRT Program</h3>
               </div>
-            ))}
-          </div>
-
-          <div className="text-center">
-            <Link
-              to="/programs"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-[#C9A96E] text-white font-bold rounded hover:bg-[#B8965D] transition-all min-h-[48px]"
-            >
-              View All Programs
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* ── SIMULATION TRAINING ──────────────────────────────── */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <span className="inline-block px-3 py-1 bg-[#C9A96E]/10 border border-[#C9A96E]/25 rounded text-[#C9A96E] text-xs font-bold uppercase tracking-widest mb-5">
-                Premium Facilities
-              </span>
-              <h2
-                className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-5 leading-tight"
-                style={{ fontFamily: "'Open Sans', sans-serif" }}
-              >
-                Simulation <span className="text-[#C9A96E]">Training</span>
-              </h2>
-              <p className="text-[#6B7280] text-base leading-relaxed mb-7">
-                State-of-the-art facilities that replicate real-world conditions. Train under pressure, build muscle memory, and develop the confidence to perform when it matters most.
+              <p className="text-sm leading-relaxed mb-5" style={{ color: TEXT_BODY }}>
+                Our Active Shooter Response training is aligned with the nationally recognized ALERRT program developed at Dallas College — the gold standard for civilian and law enforcement active threat response.
               </p>
-
-              <ul className="space-y-4 mb-8">
+              <ul className="space-y-2 mb-5">
                 {[
-                  ["High-Fidelity Environments", "Tactical settings that replicate real-world conditions"],
-                  ["Professional Equipment", "Industry-standard gear and simulation technology"],
-                  ["Real-Time Feedback", "Immediate performance assessment and expert coaching"],
-                ].map(([title, desc]) => (
-                  <li key={title} className="flex items-start gap-4">
-                    <div className="w-8 h-8 bg-[#C9A96E]/10 border border-[#C9A96E]/20 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <CheckCircle className="w-4 h-4 text-[#C9A96E]" />
-                    </div>
-                    <div>
-                      <div className="text-[#1F2937] font-semibold text-sm">{title}</div>
-                      <div className="text-[#6B7280] text-sm">{desc}</div>
-                    </div>
+                  "Run-Hide-Fight civilian response protocols",
+                  "Evidence-based active threat tactics",
+                  "Coordinated emergency response procedures",
+                  "Situational awareness training",
+                ].map((point) => (
+                  <li key={point} className="flex items-start gap-2 text-sm" style={{ color: TEXT_BODY }}>
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: BLUE }} />
+                    {point}
                   </li>
                 ))}
               </ul>
-
-              <Link
-                to="/simulation"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-[#C9A96E] text-white font-bold rounded hover:bg-[#B8965D] transition-all min-h-[48px]"
-              >
-                Explore Simulation Training
-                <ArrowRight className="w-5 h-5" />
+              <Link to="/partnerships" className="inline-flex items-center gap-2 text-sm font-bold" style={{ color: BLUE }}>
+                Learn More <ArrowRight className="w-4 h-4" />
               </Link>
-            </div>
+            </AnimatedCard>
 
-            {/* Visual card */}
-            <div
-              className="bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-10 flex flex-col items-center justify-center min-h-[320px] text-center group"
-              style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease", position: "relative", zIndex: 3 }}
+            {/* Simulation */}
+            <AnimatedCard
+              delay={0.12}
+              className="rounded-xl p-7"
+              style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)` }}
             >
-              <div className="w-20 h-20 bg-white border border-[#E5E7EB] rounded-full flex items-center justify-center mb-5 shadow-[0_4px_12px_rgba(0,0,0,0.06)]">
-                <img
-                  src="/images/shadow-logo.png"
-                  alt="Shadow Training Institute"
-                  className="w-12 h-12 object-contain"
-                />
+              <div className="flex items-center gap-3 mb-4">
+                <motion.div
+                  className="w-9 h-9 rounded-lg flex items-center justify-center"
+                  style={{ backgroundColor: "rgba(255,255,255,0.12)" }}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.2, ease: EASE_OUT }}
+                >
+                  <Target className="w-5 h-5" style={{ color: "rgb(147,197,253)" }} />
+                </motion.div>
+                <h3 className="text-lg font-bold" style={{ color: WHITE }}>Simulation-Based Training</h3>
               </div>
-              <div className="text-[#C9A96E] font-bold text-sm uppercase tracking-widest mb-1">
-                Simulation Training
-              </div>
-              <div className="mt-6 w-full max-w-xs space-y-2">
-                {["CPR / AED Simulation", "Active Shooter Simulation", "Tactical Training Simulation"].map((item) => (
-                  <div key={item} className="flex items-center gap-2 text-sm text-[#6B7280] bg-white/60 group-hover:bg-white border border-[#E5E7EB] rounded px-3 py-2" style={{ transition: "background-color 200ms ease" }}>
-                    <div className="w-1.5 h-1.5 bg-[#C9A96E]/60 rounded-full" />
-                    {item}
-                  </div>
+              <p className="text-sm leading-relaxed mb-5" style={{ color: "rgba(255,255,255,0.70)" }}>
+                Shadow Training Institute is developing state-of-the-art simulation facilities to replicate real-world conditions. Train under pressure, build confidence, and master critical skills.
+              </p>
+              <ul className="space-y-2 mb-5">
+                {[
+                  "High-fidelity scenario environments",
+                  "Stress inoculation protocols",
+                  "Immediate instructor feedback",
+                  "Directly aligned with ALERRT curriculum",
+                ].map((point) => (
+                  <li key={point} className="flex items-start gap-2 text-sm" style={{ color: "rgba(255,255,255,0.70)" }}>
+                    <CheckCircle className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "rgb(147,197,253)" }} />
+                    {point}
+                  </li>
                 ))}
-              </div>
-            </div>
+              </ul>
+              <Link to="/simulation" className="inline-flex items-center gap-2 text-sm font-bold" style={{ color: "rgb(147,197,253)" }}>
+                Learn More <ArrowRight className="w-4 h-4" />
+              </Link>
+            </AnimatedCard>
           </div>
         </div>
       </section>
 
-      {/* ── WHY CHOOSE US ────────────────────────────────────── */}
-      <section className="py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-14">
-            <h2
-              className="text-3xl sm:text-4xl font-bold text-[#1F2937] mb-4"
-              style={{ fontFamily: "'Open Sans', sans-serif" }}
-            >
-              Why Choose <span className="text-[#C9A96E]">Shadow Training</span>
+      {/* ══ WHY CHOOSE SHADOW ══ */}
+      <section className="py-20" style={{ backgroundColor: BG_LIGHT }}>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Open Sans', sans-serif", color: TEXT }}>
+              Why Choose Shadow
             </h2>
-            <p className="text-[#6B7280] text-lg max-w-2xl mx-auto">
-              Elite training that prepares you for reality, not just certification.
+            <p className="text-base max-w-xl mx-auto" style={{ color: TEXT_BODY }}>
+              Trusted by professionals across every sector
             </p>
-          </div>
+          </FadeIn>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {whyUs.map((w) => (
-              <div
-                key={w.title}
-                className="bg-white/60 hover:bg-white border border-[#E5E7EB] rounded-lg p-6 flex items-start gap-4 hover:border-[#C9A96E]/40 hover:shadow-[0_4px_12px_rgba(201,169,110,0.08)] group"
-                style={{ transition: "background-color 200ms ease, border-color 200ms ease, box-shadow 200ms ease", position: "relative", zIndex: 3 }}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {whyItems.map((item, i) => (
+              <AnimatedCard
+                key={item.title}
+                delay={i * 0.09}
+                className="rounded-xl p-6 text-center"
+                style={{
+                  backgroundColor: WHITE,
+                  border: `1px solid ${BORDER}`,
+                  boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+                }}
               >
-                <div className="w-10 h-10 bg-[#F5F7FA] border border-[#E5E7EB] rounded flex items-center justify-center flex-shrink-0 group-hover:bg-[#C9A96E] group-hover:border-[#C9A96E] transition-all duration-300">
-                  <w.icon className="w-5 h-5 text-[#C9A96E] group-hover:text-white transition-colors duration-300" />
-                </div>
-                <div>
-                  <h3
-                    className="text-base font-bold text-[#1F2937] mb-1"
-                    style={{ fontFamily: "'Open Sans', sans-serif" }}
-                  >
-                    {w.title}
-                  </h3>
-                  <p className="text-[#6B7280] text-sm leading-relaxed">{w.text}</p>
-                </div>
-              </div>
+                <motion.div
+                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                  style={{ backgroundColor: BLUE_SOFT }}
+                  whileHover={{ scale: 1.1, backgroundColor: BLUE }}
+                  transition={{ duration: 0.22, ease: EASE_OUT }}
+                >
+                  <item.icon className="w-6 h-6" style={{ color: BLUE }} />
+                </motion.div>
+                <h3 className="text-sm font-bold mb-2" style={{ color: TEXT }}>{item.title}</h3>
+                <p className="text-xs leading-relaxed" style={{ color: TEXT_BODY }}>{item.desc}</p>
+              </AnimatedCard>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── FINAL CTA ───────────── */}
-      <section className="py-24 bg-white" style={{ position: "relative", zIndex: 10 }}>
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2
-            className="text-4xl sm:text-5xl font-bold text-[#1F2937] mb-5"
-            style={{ fontFamily: "'Open Sans', sans-serif" }}
-          >
-            Ready to <span className="text-[#C9A96E]">Begin?</span>
-          </h2>
-          <p className="text-[#6B7280] text-lg mb-10 leading-relaxed">
-            Join thousands of professionals who have elevated their skills through our elite training programs. Real training. Real results.
-          </p>
+      {/* ══ ENTERPRISE TRAINING SOLUTIONS ══ */}
+      <section
+        className="py-20"
+        style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)` }}
+      >
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-14">
-            <Link
-              to="/contact"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-[#C9A96E] text-white font-bold rounded hover:bg-[#B8965D] transition-all min-h-[48px]"
-            >
-              Request Training
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-            <Link
-              to="/programs"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 border border-[#C9A96E]/50 text-[#C9A96E] font-bold rounded hover:bg-[#C9A96E]/5 hover:border-[#C9A96E] transition-all min-h-[48px]"
-            >
-              Browse Programs
-            </Link>
+            {/* Left — text */}
+            <FadeUp delay={0}>
+              <div
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-5"
+                style={{ background: "rgba(37,99,235,0.20)", border: "1px solid rgba(37,99,235,0.35)" }}
+              >
+                <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: "rgb(147,197,253)" }} />
+                <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "rgb(147,197,253)" }}>
+                  For Organizations
+                </span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: "'Open Sans', sans-serif", color: WHITE }}>
+                Enterprise Training Solutions
+              </h2>
+              <p className="text-sm leading-relaxed mb-6" style={{ color: "rgba(255,255,255,0.65)" }}>
+                Shadow Training Institute delivers customized training programs for organizations of all sizes. We tailor every program to your specific needs, schedule, and industry requirements.
+              </p>
+              <ul className="space-y-3 mb-8">
+                {[
+                  "On-site training at your facility",
+                  "Custom curriculum development",
+                  "Flexible scheduling and group rates",
+                  "Dedicated account management",
+                ].map((point) => (
+                  <li key={point} className="flex items-center gap-3 text-sm" style={{ color: "rgba(255,255,255,0.80)" }}>
+                    <CheckCircle className="w-4 h-4 flex-shrink-0" style={{ color: "rgb(147,197,253)" }} />
+                    {point}
+                  </li>
+                ))}
+              </ul>
+              <motion.div
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ duration: 0.2, ease: EASE_OUT }}
+                style={{ display: "inline-block" }}
+              >
+                <Link
+                  to="/contact"
+                  className="inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-lg"
+                  style={{ background: BLUE, color: WHITE, boxShadow: "0 4px 16px rgba(37,99,235,0.35)", transition: "box-shadow 0.25s ease" }}
+                  onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 24px rgba(37,99,235,0.50)"; }}
+                  onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 16px rgba(37,99,235,0.35)"; }}
+                >
+                  Request a Proposal <ArrowRight className="w-4 h-4" />
+                </Link>
+              </motion.div>
+            </FadeUp>
+
+            {/* Right — offering cards */}
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                {
+                  icon: Shield,
+                  title: "Safety Certified",
+                  desc: "All programs are ALERRT-aligned and nationally recognized",
+                },
+                {
+                  icon: Users,
+                  title: "Any Team Size",
+                  desc: "From individual staff to organization-wide deployments",
+                },
+                {
+                  icon: Target,
+                  title: "Custom Programs",
+                  desc: "Curriculum tailored to your industry and specific risks",
+                },
+                {
+                  icon: Award,
+                  title: "Certified Instructors",
+                  desc: "Real-world operational experience in every session",
+                },
+              ].map((card, i) => (
+                <AnimatedCard
+                  key={card.title}
+                  delay={0.1 + i * 0.09}
+                  className="rounded-2xl p-5"
+                  style={{
+                    background: "rgba(255,255,255,0.07)",
+                    border: "1px solid rgba(255,255,255,0.10)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                >
+                  <motion.div
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
+                    style={{ background: "rgba(37,99,235,0.35)", border: "1px solid rgba(37,99,235,0.40)" }}
+                    whileHover={{ scale: 1.1 }}
+                    transition={{ duration: 0.2, ease: EASE_OUT }}
+                  >
+                    <card.icon className="w-5 h-5" style={{ color: "rgb(147,197,253)" }} />
+                  </motion.div>
+                  <h3 className="text-sm font-bold mb-1.5" style={{ color: WHITE }}>{card.title}</h3>
+                  <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.55)" }}>{card.desc}</p>
+                </AnimatedCard>
+              ))}
+            </div>
+
           </div>
+        </div>
+      </section>
 
+      {/* ══ TESTIMONIALS ══ */}
+      <section className="py-20" style={{ backgroundColor: WHITE }}>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeIn className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Open Sans', sans-serif", color: TEXT }}>
+              What Our Clients Say
+            </h2>
+          </FadeIn>
+
+          <FadeUp delay={0.1}>
+            <motion.div
+              className="rounded-2xl p-10 text-center relative overflow-hidden"
+              style={{ backgroundColor: BG_LIGHT, border: `1px solid ${BORDER}` }}
+              whileHover={{ boxShadow: "0 12px 40px rgba(37,99,235,0.08)" }}
+              transition={{ duration: 0.3, ease: EASE_OUT }}
+            >
+              <div className="flex justify-center gap-1 mb-6">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-current" style={{ color: BLUE }} />
+                ))}
+              </div>
+
+              <motion.p
+                key={activeTestimonial}
+                className="text-base leading-relaxed mb-8 max-w-2xl mx-auto"
+                style={{ color: TEXT_BODY }}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.35, ease: EASE_OUT }}
+              >
+                "{testimonials[activeTestimonial].quote}"
+              </motion.p>
+
+              <motion.div
+                key={`name-${activeTestimonial}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: 0.1 }}
+              >
+                <div className="font-bold text-sm" style={{ color: TEXT }}>{testimonials[activeTestimonial].name}</div>
+                <div className="text-xs mt-0.5" style={{ color: TEXT_MUT }}>{testimonials[activeTestimonial].title}</div>
+              </motion.div>
+
+              <div className="flex justify-center gap-2 mt-8">
+                {testimonials.map((_, i) => (
+                  <motion.button
+                    key={i}
+                    onClick={() => setActiveTestimonial(i)}
+                    className="rounded-full"
+                    animate={{
+                      width: i === activeTestimonial ? 24 : 8,
+                      backgroundColor: i === activeTestimonial ? BLUE : TEXT_MUT,
+                    }}
+                    transition={{ duration: 0.3, ease: EASE_OUT }}
+                    style={{ height: "8px" }}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* ══ FINAL CTA ══ */}
+      <section className="py-20" style={{ backgroundColor: BG_LIGHT }}>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <FadeIn>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: "'Open Sans', sans-serif", color: TEXT }}>
+              Ready to Transform Your Training?
+            </h2>
+            <p className="text-base mb-8 leading-relaxed" style={{ color: TEXT_BODY }}>
+              Join thousands of professionals who have elevated their skills through our elite training programs. Get started today with a free consultation.
+            </p>
+          </FadeIn>
+          <FadeUp delay={0.15} className="flex flex-col sm:flex-row gap-3 justify-center mb-6">
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: EASE_OUT }}>
+              <Link
+                to="/contact"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3 text-sm font-bold rounded-lg"
+                style={{ background: NAVY, color: WHITE, boxShadow: "0 4px 12px rgba(13,27,62,0.20)", transition: "box-shadow 0.25s ease" }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 20px rgba(13,27,62,0.30)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(13,27,62,0.20)"; }}
+              >
+                Get Started <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: EASE_OUT }}>
+              <Link
+                to="/programs"
+                className="inline-flex items-center justify-center gap-2 px-8 py-3 text-sm font-bold rounded-lg transition-colors"
+                style={{ border: `1px solid ${BORDER}`, color: TEXT, background: WHITE }}
+                onMouseEnter={(e) => { e.currentTarget.style.borderColor = "rgba(37,99,235,0.30)"; e.currentTarget.style.color = BLUE; }}
+                onMouseLeave={(e) => { e.currentTarget.style.borderColor = BORDER; e.currentTarget.style.color = TEXT; }}
+              >
+                View Programs
+              </Link>
+            </motion.div>
+          </FadeUp>
+          <FadeUp delay={0.25}>
+            <p className="text-xs" style={{ color: TEXT_MUT }}>
+              No commitment required &nbsp;·&nbsp; Call +1 (214) 613-2588
+            </p>
+          </FadeUp>
         </div>
       </section>
 

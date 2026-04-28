@@ -29,7 +29,7 @@ function ScrollToTop() {
 
 export function Root() {
   return (
-    <div className="min-h-screen bg-[#1A1008] text-white" style={{ fontFamily: "'Lato', sans-serif" }}>
+    <div className="min-h-screen" style={{ fontFamily: "'Lato', sans-serif", backgroundColor: "#ffffff" }}>
       <ScrollToTop />
       <Navigation />
       <main>

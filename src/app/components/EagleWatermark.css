@@ -1,18 +1,19 @@
 /* ─────────────────────────────────────────────────────────────
-   Eagle Watermark — Cinematic Entrance
-   z-index: 2  (above bg:0, below content:10)
+   Eagle Watermark — Fixed, cinematic, single instance
+   z-index: 1 — behind all page content
+   Sections use semi-transparent backgrounds so eagle shows through
 ───────────────────────────────────────────────────────────── */
 
 .eagle-watermark {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: min(560px, 120%);
-  height: min(640px, 115vw);
+  width: min(480px, 90vw);
+  height: min(540px, 90vw);
   transform: translate(-50%, -50%)
              translate(var(--mx, 0px), var(--my, 0px))
              scale(var(--eagle-scale, 0.95));
-  z-index: 2;
+  z-index: 1;
   pointer-events: none;
   user-select: none;
   will-change: transform, opacity, filter;
@@ -20,6 +21,11 @@
     opacity    var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out),
     filter     var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out),
     transform  var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out);
+}
+
+.eagle-watermark.eagle-hidden {
+  opacity: 0 !important;
+  pointer-events: none;
 }
 
 /* ── Image ── */
@@ -37,29 +43,16 @@
   position: absolute;
   inset: -15%;
   border-radius: 50%;
-  /* background: radial-gradient(
-    ellipse at center,
-    rgba(219, 190, 111, 0.28) 0%,
-    rgba(201, 168, 76, 0.10) 40%,
-    transparent 70%
-  ); */
   opacity: 0;
   transform: scale(0.6);
-  transition:
-    opacity 0.9s ease-out,
-    transform 0.9s ease-out;
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
   z-index: 0;
   pointer-events: none;
 }
 
-/* ── Metallic sheen sweep — disabled ── */
-.eagle-sheen {
-  display: none;
-}
+.eagle-sheen { display: none; }
 
-/* ─────────────────────────────────────────────────────────────
-   PHASE 1 — Prelude: ghost
-───────────────────────────────────────────────────────────── */
+/* ── PHASE 1 — Prelude: ghost ── */
 .eagle-prelude {
   --eagle-scale: 0.95;
   --eagle-dur: 0.6s;
@@ -67,96 +60,53 @@
   opacity: 0.06;
   filter: blur(22px);
 }
-.eagle-prelude .eagle-glow  { opacity: 0; transform: scale(0.6); }
-.eagle-prelude .eagle-sheen { opacity: 0; transform: translateX(-120%); }
+.eagle-prelude .eagle-glow { opacity: 0; transform: scale(0.6); }
 
-/* ─────────────────────────────────────────────────────────────
-   PHASE 2 — Emerge: cinematic snap into focus
-───────────────────────────────────────────────────────────── */
+/* ── PHASE 2 — Emerge: cinematic snap ── */
 .eagle-emerge {
   --eagle-scale: 1.0;
   --eagle-dur: 0.55s;
   --eagle-ease: cubic-bezier(0.22, 1, 0.36, 1);
-  opacity: 0.55;
-  filter: blur(0px) brightness(1.10)
-                    drop-shadow(0 0 20px rgba(201, 168, 76, 0.30))
-                    drop-shadow(0 0 40px rgba(201, 168, 76, 0.12));
+  opacity: 0.50;
+  filter: blur(0px) brightness(1.3)
+          drop-shadow(0 0 24px rgba(198, 169, 74, 0.30))
+          drop-shadow(0 0 48px rgba(198, 169, 74, 0.12));
 }
-.eagle-emerge .eagle-glow {
-  opacity: 1;
-  transform: scale(1);
-}
-/* Sheen fires once during emerge */
-.eagle-emerge .eagle-sheen {
-  opacity: 1;
-  transform: translateX(120%);
-  transition: opacity 0.1s, transform 0.75s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
-}
+.eagle-emerge .eagle-glow { opacity: 1; transform: scale(1); }
 
-/* ─────────────────────────────────────────────────────────────
-   PHASE 3 — Recede: push back into depth
-───────────────────────────────────────────────────────────── */
+/* ── PHASE 3 — Recede ── */
 .eagle-recede {
-  --eagle-scale: 1.08;
+  --eagle-scale: 1.06;
   --eagle-dur: 0.9s;
   --eagle-ease: ease-in-out;
-  opacity: 0.06;
+  opacity: 0.04;
   filter: blur(2px);
 }
-.eagle-recede .eagle-glow  { opacity: 0; transform: scale(1.2); }
-.eagle-recede .eagle-sheen { opacity: 0; transform: translateX(120%); }
+.eagle-recede .eagle-glow { opacity: 0; transform: scale(1.2); }
 
-/* ─────────────────────────────────────────────────────────────
-   PHASE 4 — Settled: permanent breathing watermark
-───────────────────────────────────────────────────────────── */
+/* ── PHASE 4 — Settled: subtle watermark, never competes with text ── */
 .eagle-settled {
   --eagle-scale: 1.0;
   --eagle-dur: 1.2s;
   --eagle-ease: ease-in-out;
-  opacity: 0.10;
-  filter: blur(0px) brightness(0.85)
-                    drop-shadow(0 0 20px rgba(201, 168, 76, 0.10));
+  opacity: 0.12;
+  filter: blur(0px) brightness(1.1)
+          drop-shadow(0 0 16px rgba(198, 169, 74, 0.12));
 }
-.eagle-settled .eagle-glow  { opacity: 0; }
-.eagle-settled .eagle-sheen { opacity: 0; }
+.eagle-settled .eagle-glow { opacity: 0; }
 
-/* ─────────────────────────────────────────────────────────────
-   Footer clip — hide eagle when footer enters viewport
-───────────────────────────────────────────────────────────── */
-.eagle-clip-footer {
-  clip-path: inset(0 0 100% 0);
-  transition:
-    clip-path 0.5s ease-in-out,
-    opacity    var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out),
-    filter     var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out),
-    transform  var(--eagle-dur, 0.6s) var(--eagle-ease, ease-out);
-}
-
-/* ─────────────────────────────────────────────────────────────
-   Reduced motion — static faint watermark, no animation
-───────────────────────────────────────────────────────────── */
+/* ── Reduced motion ── */
 .eagle-reduced {
-  opacity: 0.10;
-  filter: blur(0px) brightness(0.85) drop-shadow(0 0 16px rgba(201, 168, 76, 0.10));
-  animation: none !important;
+  opacity: 0.12;
+  filter: blur(0px) brightness(1.1) drop-shadow(0 0 14px rgba(198, 169, 74, 0.10));
   transition: none !important;
 }
-.eagle-reduced .eagle-glow,
-.eagle-reduced .eagle-sheen { display: none; }
+.eagle-reduced .eagle-glow { display: none; }
 
-/* ─────────────────────────────────────────────────────────────
-   Mobile — lighter, faster
-───────────────────────────────────────────────────────────── */
+/* ── Mobile ── */
 @media (max-width: 640px) {
   .eagle-watermark {
     width: min(260px, 80vw);
-    height: min(260px, 80vw);
-  }
-  .eagle-emerge {
-    --eagle-dur: 0.4s;
-    filter: blur(0px) brightness(1.12) drop-shadow(0 0 18px rgba(201, 168, 76, 0.45));
-  }
-  .eagle-settled {
-    animation-duration: 12s;
+    height: min(300px, 80vw);
   }
 }

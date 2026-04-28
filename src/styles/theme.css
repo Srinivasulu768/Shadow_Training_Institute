@@ -4,113 +4,114 @@
   --font-size: 16px;
 
   /* ═══════════════════════════════════════════════════════════════
-     PREMIUM GREY + SUBTLE GOLD THEME
-     Enterprise-grade, clean, professional
+     MIDNIGHT BLUE + STEEL + CONTROLLED GOLD
+     Enterprise-grade dark theme for Shadow Training Institute
      ═══════════════════════════════════════════════════════════════ */
 
   /* ─── PRIMARY BACKGROUNDS ─── */
-  --background: #FFFFFF;
-  --background-secondary: #F5F7FA;
-  --background-tertiary: #F3F4F6;
+  --background:           rgb(30, 46, 72);
+  --background-secondary: rgb(38, 58, 88);
+  --background-tertiary:  rgb(48, 70, 104);
 
   /* ─── FOREGROUND & TEXT ─── */
-  --foreground: #1F2937;
-  --foreground-secondary: #374151;
-  --foreground-muted: #6B7280;
-  --foreground-subtle: #9CA3AF;
+  --foreground:           rgb(235, 240, 245);
+  --foreground-secondary: rgb(185, 195, 210);
+  --foreground-muted:     rgb(140, 150, 165);
+  --foreground-subtle:    rgb(100, 110, 125);
 
   /* ─── CARD & CONTAINER SURFACES ─── */
-  --card: #FFFFFF;
-  --card-foreground: #1F2937;
-  --card-border: #E5E7EB;
-  --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --card:            rgb(48, 70, 104);
+  --card-foreground: rgb(235, 240, 245);
+  --card-border:     rgba(255, 255, 255, 0.10);
+  --card-shadow:     0 4px 16px rgba(0, 0, 0, 0.30);
 
   /* ─── POPOVER & DROPDOWN ─── */
-  --popover: #FFFFFF;
-  --popover-foreground: #1F2937;
+  --popover:            rgb(48, 70, 104);
+  --popover-foreground: rgb(235, 240, 245);
 
-  /* ─── PRIMARY ACCENT (Subtle Gold) ─── */
-  --primary: #C9A96E;
-  --primary-foreground: #FFFFFF;
-  --primary-hover: #B8965D;
-  --primary-active: #A8854C;
-  --primary-subtle: rgba(201, 169, 110, 0.10);
+  /* ─── PRIMARY ACCENT (Controlled Gold) ─── */
+  --primary:         rgb(198, 169, 74);
+  --primary-foreground: rgb(30, 46, 72);
+  --primary-hover:   rgb(176, 150, 60);
+  --primary-active:  rgb(155, 132, 48);
+  --primary-subtle:  rgba(198, 169, 74, 0.10);
 
   /* ─── SECONDARY ─── */
-  --secondary: #F3F4F6;
-  --secondary-foreground: #374151;
-  --secondary-hover: #E5E7EB;
+  --secondary:            rgb(48, 70, 104);
+  --secondary-foreground: rgb(185, 195, 210);
+  --secondary-hover:      rgb(58, 82, 120);
 
   /* ─── MUTED & DISABLED STATES ─── */
-  --muted: #F3F4F6;
-  --muted-foreground: #6B7280;
+  --muted:            rgb(48, 70, 104);
+  --muted-foreground: rgb(140, 150, 165);
 
   /* ─── ACCENT & INTERACTIVE ─── */
-  --accent: #C9A96E;
-  --accent-foreground: #FFFFFF;
+  --accent:            rgb(198, 169, 74);
+  --accent-foreground: rgb(30, 46, 72);
 
   /* ─── DESTRUCTIVE & ERROR ─── */
-  --destructive: #DC2626;
-  --destructive-foreground: #FFFFFF;
+  --destructive:            rgb(185, 60, 60);
+  --destructive-foreground: rgb(235, 240, 245);
 
   /* ─── BORDERS & DIVIDERS ─── */
-  --border: #E5E7EB;
-  --border-secondary: #D1D5DB;
-  --border-muted: #F3F4F6;
+  --border:           rgba(255, 255, 255, 0.10);
+  --border-secondary: rgba(255, 255, 255, 0.06);
+  --border-muted:     rgba(255, 255, 255, 0.06);
 
   /* ─── INPUT & FORM ELEMENTS ─── */
-  --input: transparent;
-  --input-background: #FFFFFF;
-  --input-border: #D1D5DB;
-  --input-border-focus: #C9A96E;
-  --input-placeholder: #9CA3AF;
+  --input:               transparent;
+  --input-background:    rgb(38, 58, 88);
+  --input-border:        rgba(255, 255, 255, 0.14);
+  --input-border-focus:  rgb(198, 169, 74);
+  --input-placeholder:   rgb(100, 110, 125);
 
   /* ─── SWITCH & TOGGLE ─── */
-  --switch-background: #D1D5DB;
-  --switch-active: #C9A96E;
+  --switch-background: rgba(255, 255, 255, 0.15);
+  --switch-active:     rgb(198, 169, 74);
 
   /* ─── FOCUS & RING ─── */
-  --ring: #C9A96E;
-  --ring-offset: #FFFFFF;
+  --ring:        rgb(198, 169, 74);
+  --ring-offset: rgb(30, 46, 72);
 
   /* ─── TYPOGRAPHY ─── */
   --font-weight-medium: 600;
   --font-weight-normal: 400;
 
   /* ─── SPACING & RADIUS ─── */
-  --radius: 0.5rem;
+  --radius:    0.5rem;
   --radius-sm: 0.375rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
 
   /* ═══════════════════════════════════════════════════════════════
-     BRAND COLORS
+     BRAND TOKENS
      ═══════════════════════════════════════════════════════════════ */
-  --brand-bg: #FFFFFF;
-  --brand-surface: #F5F7FA;
-  --brand-muted: #F3F4F6;
-  --brand-gold: #C9A96E;
-  --brand-gold-hover: #B8965D;
-  --brand-gold-active: #A8854C;
-  --brand-text: #1F2937;
-  --brand-text-secondary: #374151;
-  --brand-text-muted: #6B7280;
-  --brand-text-subtle: #9CA3AF;
-  --brand-border: #E5E7EB;
-  --brand-border-secondary: #D1D5DB;
+  --brand-bg:               rgb(30, 46, 72);
+  --brand-surface:          rgb(38, 58, 88);
+  --brand-card:             rgb(48, 70, 104);
+  --brand-gold:             rgb(198, 169, 74);
+  --brand-gold-hover:       rgb(176, 150, 60);
+  --brand-gold-active:      rgb(155, 132, 48);
+  --brand-steel:            rgb(200, 205, 215);
+  --brand-text:             rgb(235, 240, 245);
+  --brand-text-secondary:   rgb(185, 195, 210);
+  --brand-text-muted:       rgb(140, 150, 165);
+  --brand-text-subtle:      rgb(100, 110, 125);
+  --brand-border:           rgba(255, 255, 255, 0.10);
+  --brand-divider:          rgba(255, 255, 255, 0.06);
 
   /* ═══════════════════════════════════════════════════════════════
      SHADOW & ELEVATION SYSTEM
      ═══════════════════════════════════════════════════════════════ */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
-  --shadow-xl: 0 16px 40px rgba(0, 0, 0, 0.10);
-  --shadow-gold: 0 0 20px rgba(201, 169, 110, 0.15);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.30);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 8px 28px rgba(0, 0, 0, 0.40);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.50);
+  --shadow-gold: 0 0 20px rgba(198, 169, 74, 0.12);
 
   /* ═══════════════════════════════════════════════════════════════
      EAGLE WATERMARK
      ═══════════════════════════════════════════════════════════════ */
-  --eagle-opacity: 0.04;
-  --eagle-glow-color: rgba(201, 169, 110, 0.08);
+  --eagle-opacity:     0.10;
+  --eagle-glow-color:  rgba(198, 169, 74, 0.08);
 }

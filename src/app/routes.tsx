@@ -7,6 +7,8 @@ import { Simulation } from "./pages/Simulation";
 import { Partnerships } from "./pages/Partnerships";
 import { Contact } from "./pages/Contact";
 import { NotFound } from "./pages/NotFound";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy";
+import { TermsOfService } from "./pages/TermsOfService";
 
 export const routes: RouteObject[] = [
   {
@@ -19,6 +21,8 @@ export const routes: RouteObject[] = [
       { path: "simulation", Component: Simulation },
       { path: "partnerships", Component: Partnerships },
       { path: "contact", Component: Contact },
+      { path: "privacy-policy", Component: PrivacyPolicy },
+      { path: "terms-of-service", Component: TermsOfService },
       { path: "*", Component: NotFound },
     ],
   },
