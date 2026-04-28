@@ -135,7 +135,7 @@ export function Programs() {
   return (
     <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: BG }}>
       {/* Hero */}
-      <section style={{ backgroundColor: NAVY, paddingBottom: 0 }}>
+      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", paddingBottom: 0 }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
           <motion.div ref={headerRef} className="text-center"
             initial={{ opacity: 0, y: 24 }} animate={headerInView ? { opacity: 1, y: 0 } : {}}
@@ -152,7 +152,7 @@ export function Programs() {
             </p>
           </motion.div>
         </div>
-        <WaveDivider topColor={NAVY} bottomColor={CARD} />
+        <WaveDivider topGradient bottomColor={CARD} />
       </section>
 
       {/* Program rows */}
@@ -163,7 +163,7 @@ export function Programs() {
       {/* CTA */}
       <section style={{ backgroundColor: CARD }}>
         <WaveDivider topColor={CARD} bottomColor={NAVY} flip />
-        <div style={{ backgroundColor: NAVY }}>
+        <div style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)" }}>
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
             <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }} transition={{ duration: 0.55, ease: EASE }}>
@@ -181,7 +181,6 @@ export function Programs() {
               </motion.div>
             </motion.div>
           </div>
-          <WaveDivider topColor={NAVY} bottomColor="rgb(243, 246, 251)" />
         </div>
       </section>
     </div>

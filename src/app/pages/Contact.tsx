@@ -107,7 +107,7 @@ export function Contact() {
     <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: BG }}>
 
       {/* ── Hero header ── */}
-      <section style={{ backgroundColor: NAVY, paddingBottom: 0 }}>
+      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", paddingBottom: 0 }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
           <motion.div
             ref={headerRef}
@@ -128,7 +128,7 @@ export function Contact() {
             </p>
           </motion.div>
         </div>
-        <WaveDivider topColor={NAVY} bottomColor={CARD} />
+        <WaveDivider topGradient bottomColor={CARD} />
       </section>
 
       {/* ── Contact info cards ── */}
@@ -363,7 +363,7 @@ export function Contact() {
       </section>
 
       {/* ── CTA footer ── */}
-      <section style={{ backgroundColor: NAVY }}>
+      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

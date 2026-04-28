@@ -163,7 +163,7 @@ export function Methodology() {
     <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: BG }}>
 
       {/* Hero */}
-      <section style={{ backgroundColor: NAVY, paddingBottom: 0 }}>
+      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", paddingBottom: 0 }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
           <motion.div
             ref={headerRef}
@@ -186,7 +186,7 @@ export function Methodology() {
             </p>
           </motion.div>
         </div>
-        <WaveDivider topColor={NAVY} bottomColor={CARD} />
+        <WaveDivider topGradient bottomColor={CARD} />
       </section>
 
       {/* 3 pillars */}
@@ -230,22 +230,10 @@ export function Methodology() {
         <MethodRow key={method.id} method={method} index={index} />
       ))}
 
-      {/* single wave into CTA — last row is even so bg is CARD */}
-      <div style={{ background: CARD, lineHeight: 0, marginBottom: "-1px" }}>
-        <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-          style={{ display: "block", width: "100%", height: "90px" }}>
-          <defs>
-            <linearGradient id="meth-wave-navy" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%"   stopColor={NAVY} />
-              <stop offset="100%" stopColor={NAVY_MID} />
-            </linearGradient>
-          </defs>
-          <path d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z" fill="url(#meth-wave-navy)" />
-        </svg>
-      </div>
+      <WaveDivider topColor={CARD} bottomColor={NAVY} flip />
 
       {/* CTA */}
-      <div style={{ backgroundColor: NAVY }}>
+      <div style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)" }}>
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -275,7 +263,6 @@ export function Methodology() {
             </div>
           </motion.div>
         </div>
-        <WaveDivider topColor={NAVY} bottomColor="rgb(243, 246, 251)" />
       </div>
     </div>
   );

@@ -188,7 +188,7 @@ export function Home() {
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
-          paddingTop: "90px",
+          paddingTop: "0",
         }}
       >
         {/* subtle dot grid */}

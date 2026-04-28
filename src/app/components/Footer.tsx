@@ -15,9 +15,8 @@ const TEXT_MUT  = "rgba(255,255,255,0.40)";
 export function Footer() {
   return (
     <>
-      {/* Wave transitions from whatever the last page section is into the navy footer */}
-      {/* Wave — gradient fill matches footer exactly */}
-      <div style={{ background: "rgb(243, 246, 251)", lineHeight: 0, marginBottom: "-1px" }}>
+      {/* Wave — gradient background matches footer exactly, no color gap */}
+      <div style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", lineHeight: 0, marginBottom: "-1px" }}>
         <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
           style={{ display: "block", width: "100%", height: "90px" }}>
           <defs>

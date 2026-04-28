@@ -49,12 +49,34 @@ export function Navigation() {
   useEffect(() => { setIsOpen(false); }, [location.pathname, location.hash]);
   useEffect(() => { document.body.style.overflow = isOpen ? "hidden" : ""; return () => { document.body.style.overflow = ""; }; }, [isOpen]);
   useEffect(() => {
-    const fn = () => setScrolled(window.scrollY > 80);
-    window.addEventListener("scroll", fn);
+    let ticking = false;
+    const fn = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          // Hysteresis: expand at <80px, collapse at >160px — prevents flicker loop
+          setScrolled((prev) => {
+            if (prev && window.scrollY < 80)  return false;
+            if (!prev && window.scrollY > 180) return true;
+            return prev;
+          });
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    fn();
+    window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
 
   const close = () => setIsOpen(false);
+
+  /* Dynamic sizes based on scroll state */
+  const navHeight   = scrolled ? "88px"   : "140px";
+  const logoSize    = scrolled ? "62px"   : "100px";
+  const titleSize   = scrolled ? "clamp(22px, 2.6vw, 34px)" : "clamp(30px, 4vw, 54px)";
+  const lineShow    = !scrolled;
+  const dropdownTop = scrolled ? "88px"   : "140px";
 
   return (
     <>
@@ -73,22 +95,24 @@ export function Navigation() {
           backdropFilter: scrolled ? "blur(16px)" : "none",
           borderBottom: "none",
           boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.30)" : "none",
-          transition: "background 0.35s ease, box-shadow 0.35s ease",
+          transition: "background 0.4s ease, box-shadow 0.4s ease, height 0.4s ease",
+          height: navHeight,
+          overflow: "hidden",
         }}
       >
-        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14">
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 lg:px-14" style={{ height: "100%" }}>
           <div
             className="grid items-center"
-            style={{ gridTemplateColumns: "auto 1fr auto", height: "90px", gap: "20px" }}
+            style={{ gridTemplateColumns: "auto 1fr auto", height: "100%", gap: "20px" }}
           >
-            {/* LEFT — big logo */}
+            {/* LEFT — logo */}
             <Link
               to="/"
               onClick={() => window.scrollTo({ top: 0, behavior: "instant" })}
               className="flex-shrink-0"
               style={{ textDecoration: "none" }}
             >
-              <div className="relative">
+              <div className="relative" style={{ transition: "all 0.35s ease" }}>
                 <motion.div
                   className="absolute inset-0 rounded-full"
                   style={{ background: "rgba(37,99,235,0.30)", filter: "blur(12px)" }}
@@ -99,59 +123,78 @@ export function Navigation() {
                   src="/images/shadow-logo.png"
                   alt="Shadow Training Institute"
                   className="relative object-contain"
-                  style={{ height: "68px", width: "68px" }}
+                  style={{
+                    height: logoSize,
+                    width: logoSize,
+                    transition: "height 0.35s ease, width 0.35s ease",
+                  }}
                 />
               </div>
             </Link>
 
-            {/* CENTER — big title + tagline */}
-            <motion.div
-              className="text-center"
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, ease: EASE }}
-            >
+            {/* CENTER — title + tagline */}
+            <div className="text-center" style={{ overflow: "hidden" }}>
               <div
                 className="font-extrabold leading-tight"
                 style={{
                   fontFamily: "'Open Sans', sans-serif",
-                  fontSize: "clamp(24px, 3.2vw, 42px)",
+                  fontSize: titleSize,
                   color: WHITE,
                   letterSpacing: "-0.01em",
                   whiteSpace: "nowrap",
+                  transition: "font-size 0.35s ease",
                 }}
               >
                 Shadow Training
                 <span style={{ color: "rgb(147, 197, 253)" }}> Institute</span>
               </div>
+
+              {/* Tagline — always visible, smaller after scroll */}
               <div
-                className="font-medium tracking-[0.22em] uppercase mt-1"
-                style={{ fontSize: "10px", color: TEXT_DIM }}
-              >
-                Disciplina Quasi Modus Vivendi
-              </div>
-              <motion.div
-                className="h-[2px] rounded-full mx-auto mt-1.5"
                 style={{
-                  background: "linear-gradient(90deg, transparent, rgb(147,197,253), transparent)",
-                  maxWidth: "300px",
+                  overflow: "hidden",
+                  maxHeight: "40px",
+                  opacity: 1,
+                  transition: "max-height 0.35s ease, opacity 0.25s ease",
                 }}
-                initial={{ scaleX: 0 }}
-                animate={{ scaleX: 1 }}
-                transition={{ duration: 1, delay: 0.4, ease: EASE }}
-              />
-            </motion.div>
+              >
+                <div
+                  className="font-medium tracking-[0.22em] uppercase mt-1.5"
+                  style={{
+                    fontSize: scrolled ? "8px" : "11px",
+                    color: TEXT_DIM,
+                    transition: "font-size 0.35s ease",
+                  }}
+                >
+                  Disciplina Quasi Modus Vivendi
+                </div>
+                {lineShow && (
+                  <motion.div
+                    className="h-[2px] rounded-full mx-auto mt-1.5"
+                    style={{
+                      background: "linear-gradient(90deg, transparent, rgb(147,197,253), transparent)",
+                      maxWidth: "300px",
+                    }}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1, delay: 0.4, ease: EASE }}
+                  />
+                )}
+              </div>
+            </div>
 
             {/* RIGHT — hamburger */}
-            <div className="flex justify-end flex-shrink-0" style={{ paddingLeft: "0px", marginLeft: "-60px" }}>
+            <div className="flex justify-end flex-shrink-0" style={{ marginLeft: "-60px" }}>
               <motion.button
                 onClick={() => setIsOpen((o) => !o)}
                 aria-label={isOpen ? "Close menu" : "Open menu"}
-                className="flex items-center justify-center w-12 h-12 rounded-xl"
+                className="flex items-center justify-center rounded-xl"
                 style={{
+                  width: scrolled ? "48px" : "48px",
+                  height: scrolled ? "48px" : "48px",
                   background: isOpen ? "rgba(255,255,255,0.20)" : "rgba(255,255,255,0.10)",
                   border: `1px solid ${BORDER}`,
-                  transition: "background 0.2s ease",
+                  transition: "background 0.2s ease, width 0.35s ease, height 0.35s ease",
                 }}
                 whileTap={{ scale: 0.9 }}
                 transition={{ duration: 0.12 }}
@@ -164,14 +207,14 @@ export function Navigation() {
       </nav>
 
       {/* ══════════════════════════════════════
-          BACKDROP (light, doesn't cover nav)
+          BACKDROP
       ══════════════════════════════════════ */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             key="backdrop"
             className="fixed inset-0"
-            style={{ backgroundColor: "rgba(10,20,50,0.40)", zIndex: 150, backdropFilter: "blur(2px)", top: "90px" }}
+            style={{ backgroundColor: "rgba(10,20,50,0.40)", zIndex: 150, backdropFilter: "blur(2px)", top: dropdownTop }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -182,8 +225,7 @@ export function Navigation() {
       </AnimatePresence>
 
       {/* ══════════════════════════════════════
-          DROPDOWN PANEL — anchored top-right
-          below the nav bar, like the reference
+          DROPDOWN PANEL
       ══════════════════════════════════════ */}
       <AnimatePresence>
         {isOpen && (
@@ -191,7 +233,7 @@ export function Navigation() {
             key="dropdown"
             style={{
               position: "fixed",
-              top: "90px",
+              top: dropdownTop,
               right: "max(16px, calc((100vw - 1280px) / 2 + 20px))",
               zIndex: 190,
               width: "min(270px, calc(100vw - 32px))",

@@ -27,7 +27,7 @@ export function Simulation() {
     <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: BG }}>
 
       {/* ── Hero ── */}
-      <section style={{ backgroundColor: NAVY, paddingBottom: 0 }}>
+      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", paddingBottom: 0 }}>
         <WaveSplitRow
           imageLeft={false}
           bgColor={NAVY}
@@ -71,7 +71,7 @@ export function Simulation() {
             </motion.div>
           }
         />
-        <WaveDivider topColor={NAVY} bottomColor={CARD} />
+        <WaveDivider topGradient bottomColor={CARD} />
       </section>
 
       {/* ── What to expect ── */}
@@ -171,7 +171,7 @@ export function Simulation() {
       </section>
 
       {/* ── CTA ── */}
-      <section style={{ backgroundColor: NAVY }}>
+      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)" }}>
         <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -193,7 +193,6 @@ export function Simulation() {
             </motion.div>
           </motion.div>
         </div>
-        <WaveDivider topColor={NAVY} bottomColor="rgb(243, 246, 251)" />
       </section>
     </div>
   );

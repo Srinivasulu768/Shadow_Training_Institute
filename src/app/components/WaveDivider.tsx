@@ -7,30 +7,43 @@ interface WaveDividerProps {
   topColor?:    string;
   bottomColor?: string;
   flip?:        boolean;
+  topGradient?: boolean; /* fills the top area with the footer navy gradient */
 }
 
 export function WaveDivider({
   topColor    = "#ffffff",
   bottomColor = "rgb(243,246,251)",
   flip        = false,
+  topGradient = false,
 }: WaveDividerProps) {
   /* Use a unique gradient id per instance to avoid SVG id collisions */
-  const gradId = `wave-grad-${Math.abs(bottomColor.charCodeAt(0) + bottomColor.charCodeAt(4))}`;
+  const gradId     = `wave-grad-${Math.abs(bottomColor.charCodeAt(0) + bottomColor.charCodeAt(4))}`;
+  const topGradId  = "wave-top-navy-grad";
 
   /* Detect if bottomColor is the footer navy — if so, use the gradient */
   const isNavy = bottomColor === "rgb(15, 35, 75)";
 
   return (
-    <div style={{ background: topColor, lineHeight: 0, overflow: "hidden", marginBottom: "-1px", transform: flip ? "scaleX(-1)" : undefined }}>
+    <div style={{ background: topGradient ? "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)" : topColor, lineHeight: 0, overflow: "hidden", marginBottom: "-1px", transform: flip ? "scaleX(-1)" : undefined }}>
       <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
         style={{ display: "block", width: "100%", height: "90px" }}>
-        {isNavy && (
-          <defs>
+        <defs>
+          {topGradient && (
+            <linearGradient id={topGradId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stopColor="rgb(15, 35, 75)" />
+              <stop offset="100%" stopColor="rgb(22, 52, 110)" />
+            </linearGradient>
+          )}
+          {isNavy && (
             <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
               <stop offset="0%"   stopColor="rgb(15, 35, 75)" />
               <stop offset="100%" stopColor="rgb(22, 52, 110)" />
             </linearGradient>
-          </defs>
+          )}
+        </defs>
+        {/* Fill the entire SVG background with the gradient when topGradient is set */}
+        {topGradient && (
+          <rect x="0" y="0" width="1440" height="90" fill={`url(#${topGradId})`} />
         )}
         <path
           d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z"
