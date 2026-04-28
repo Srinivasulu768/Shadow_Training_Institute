@@ -12,7 +12,7 @@ const CARD    = "#ffffff";
 const BORDER  = "rgba(0,0,0,0.07)";
 const BLUE    = "rgb(37, 99, 235)";
 const BLUE_S  = "rgba(37,99,235,0.08)";
-const NAVY    = "rgb(13, 27, 62)";
+const NAVY    = "rgb(15, 35, 75)";
 const TEXT    = "rgb(15, 23, 42)";
 const BODY    = "rgb(71, 85, 105)";
 const MUTED   = "rgb(148, 163, 184)";
@@ -167,7 +167,7 @@ export function Partnerships() {
                   </div>
                 </div>
 
-                <div className="pt-5" style={{ borderTop: `1px solid ${BORDER}` }}>
+                <div className="pt-5">
                   <p className="text-xs mb-3 uppercase tracking-wider font-semibold" style={{ color: MUTED }}>Related Programs</p>
                   <button
                     onClick={() => setProgramsOpen((o) => !o)}
@@ -199,7 +199,7 @@ export function Partnerships() {
                           to={p.href}
                           onClick={() => setProgramsOpen(false)}
                           className="flex items-center justify-between px-4 py-3 text-sm transition-colors"
-                          style={{ color: BODY, borderBottom: `1px solid ${BORDER}` }}
+                          style={{ color: BODY }}
                           onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = SURFACE; e.currentTarget.style.color = BLUE; }}
                           onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; e.currentTarget.style.color = BODY; }}
                         >

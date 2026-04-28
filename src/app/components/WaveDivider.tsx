@@ -14,11 +14,28 @@ export function WaveDivider({
   bottomColor = "rgb(243,246,251)",
   flip        = false,
 }: WaveDividerProps) {
+  /* Use a unique gradient id per instance to avoid SVG id collisions */
+  const gradId = `wave-grad-${Math.abs(bottomColor.charCodeAt(0) + bottomColor.charCodeAt(4))}`;
+
+  /* Detect if bottomColor is the footer navy — if so, use the gradient */
+  const isNavy = bottomColor === "rgb(15, 35, 75)";
+
   return (
-    <div style={{ background: topColor, lineHeight: 0, overflow: "hidden", transform: flip ? "scaleX(-1)" : undefined }}>
+    <div style={{ background: topColor, lineHeight: 0, overflow: "hidden", marginBottom: "-1px", transform: flip ? "scaleX(-1)" : undefined }}>
       <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
         style={{ display: "block", width: "100%", height: "90px" }}>
-        <path d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z" fill={bottomColor} />
+        {isNavy && (
+          <defs>
+            <linearGradient id={gradId} x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stopColor="rgb(15, 35, 75)" />
+              <stop offset="100%" stopColor="rgb(22, 52, 110)" />
+            </linearGradient>
+          </defs>
+        )}
+        <path
+          d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z"
+          fill={isNavy ? `url(#${gradId})` : bottomColor}
+        />
       </svg>
     </div>
   );

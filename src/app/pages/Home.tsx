@@ -7,14 +7,14 @@ import {
   CheckCircle, ArrowRight,
   Star, TrendingUp, Zap, ChevronLeft, ChevronRight,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FadeUp, FadeIn, EASE_OUT, AnimatedCard } from "../components/AnimatedCard";
 import { WaveDivider } from "../components/WaveDivider";
 
 /* ── design tokens ── */
-const NAVY      = "rgb(13, 27, 62)";
-const NAVY_MID  = "rgb(18, 40, 90)";
-const NAVY_CARD = "rgb(22, 48, 105)";
+const NAVY      = "rgb(15, 35, 75)";
+const NAVY_MID  = "rgb(22, 52, 110)";
+const NAVY_CARD = "rgb(22, 52, 110)";
 const BLUE      = "rgb(37, 99, 235)";
 const BLUE_SOFT = "rgba(37, 99, 235, 0.10)";
 const WHITE     = "#ffffff";
@@ -169,6 +169,14 @@ export function Home() {
   const prevSlide = () => setActiveSlide((s) => (s - 1 + heroSlides.length) % heroSlides.length);
   const nextSlide = () => setActiveSlide((s) => (s + 1) % heroSlides.length);
 
+  /* auto-advance carousel every 3 seconds */
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveSlide((s) => (s + 1) % heroSlides.length);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: WHITE }}>
 
@@ -180,6 +188,7 @@ export function Home() {
           minHeight: "100vh",
           display: "flex",
           alignItems: "center",
+          paddingTop: "90px",
         }}
       >
         {/* subtle dot grid */}
@@ -200,22 +209,13 @@ export function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, ease: EASE_OUT }}
             >
-              {/* label */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-8 h-0.5" style={{ backgroundColor: GOLD }} />
-                <span className="text-xs font-bold tracking-[0.20em] uppercase" style={{ color: GOLD }}>
-                  Enterprise Training
-                </span>
-              </div>
-
               <h1
                 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-6 leading-[1.08]"
                 style={{ fontFamily: "'Open Sans', sans-serif", color: WHITE }}
               >
                 Transform Your<br />
                 Workforce with<br />
-                Enterprise-Grade<br />
-                Training
+                <span style={{ color: "rgb(147,197,253)" }}>Elite Training</span>
               </h1>
 
               <p className="text-base leading-relaxed mb-8 max-w-md" style={{ color: "rgba(255,255,255,0.65)" }}>
@@ -334,8 +334,13 @@ export function Home() {
         </div>
       </section>
 
-      {/* wave: NAVY → WHITE */}
-      <WaveDivider topColor={NAVY_MID} bottomColor={WHITE} />
+      {/* wave: hero gradient → WHITE — background matches hero gradient end color */}
+      <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`, lineHeight: 0, marginBottom: "-1px" }}>
+        <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+          style={{ display: "block", width: "100%", height: "90px" }}>
+          <path d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z" fill={WHITE} />
+        </svg>
+      </div>
 
       {/* ══ LEARNING METHODOLOGIES ══ */}
       <section className="py-20 overflow-hidden" style={{ backgroundColor: WHITE }}>
@@ -434,7 +439,7 @@ export function Home() {
                     style={{
                       backgroundColor: NAVY,
                       textDecoration: "none",
-                      boxShadow: "0 8px 32px rgba(13,27,62,0.25)",
+                      boxShadow: "0 8px 32px rgba(15,35,75,0.25)",
                     }}
                   >
                     <div>
@@ -462,9 +467,9 @@ export function Home() {
             <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: EASE_OUT }} style={{ display: "inline-block" }}>
               <Link to="/programs"
                 className="inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-lg"
-                style={{ background: NAVY, color: WHITE, boxShadow: "0 4px 12px rgba(13,27,62,0.20)", transition: "box-shadow 0.25s ease" }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 20px rgba(13,27,62,0.30)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(13,27,62,0.20)"; }}>
+                style={{ background: NAVY, color: WHITE, boxShadow: "0 4px 12px rgba(15,35,75,0.20)", transition: "box-shadow 0.25s ease" }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,35,75,0.30)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(15,35,75,0.20)"; }}>
                 View All Programs <ArrowRight className="w-4 h-4" />
               </Link>
             </motion.div>
@@ -606,7 +611,7 @@ export function Home() {
                     style={{
                       backgroundColor: NAVY,
                       textDecoration: "none",
-                      boxShadow: "0 8px 32px rgba(13,27,62,0.25)",
+                      boxShadow: "0 8px 32px rgba(15,35,75,0.25)",
                     }}
                   >
                     <div
@@ -629,8 +634,19 @@ export function Home() {
         </div>
       </section>
 
-      {/* wave: BG_LIGHT → NAVY */}
-      <WaveDivider topColor={BG_LIGHT} bottomColor={NAVY} />
+      {/* wave: BG_LIGHT → navy gradient */}
+      <div style={{ background: BG_LIGHT, lineHeight: 0, marginBottom: "-1px" }}>
+        <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+          style={{ display: "block", width: "100%", height: "90px" }}>
+          <defs>
+            <linearGradient id="wave-to-navy" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stopColor={NAVY} />
+              <stop offset="100%" stopColor={NAVY_MID} />
+            </linearGradient>
+          </defs>
+          <path d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z" fill="url(#wave-to-navy)" />
+        </svg>
+      </div>
 
       {/* ══ ENTERPRISE TRAINING SOLUTIONS ══ */}
       <section
@@ -740,8 +756,13 @@ export function Home() {
         </div>
       </section>
 
-      {/* wave: NAVY → WHITE */}
-      <WaveDivider topColor={NAVY_MID} bottomColor={WHITE} flip />
+      {/* wave: enterprise gradient → WHITE */}
+      <div style={{ background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`, lineHeight: 0, marginBottom: "-1px", transform: "scaleX(-1)" }}>
+        <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+          style={{ display: "block", width: "100%", height: "90px" }}>
+          <path d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z" fill={WHITE} />
+        </svg>
+      </div>
 
       {/* ══ TESTIMONIALS ══ */}
       <section className="py-20" style={{ backgroundColor: WHITE }}>
@@ -825,9 +846,9 @@ export function Home() {
               <Link
                 to="/contact"
                 className="inline-flex items-center justify-center gap-2 px-8 py-3 text-sm font-bold rounded-lg"
-                style={{ background: NAVY, color: WHITE, boxShadow: "0 4px 12px rgba(13,27,62,0.20)", transition: "box-shadow 0.25s ease" }}
-                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 20px rgba(13,27,62,0.30)"; }}
-                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(13,27,62,0.20)"; }}
+                style={{ background: NAVY, color: WHITE, boxShadow: "0 4px 12px rgba(15,35,75,0.20)", transition: "box-shadow 0.25s ease" }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,35,75,0.30)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(15,35,75,0.20)"; }}
               >
                 Get Started <ArrowRight className="w-4 h-4" />
               </Link>

@@ -1,7 +1,7 @@
 import { Link } from "react-router";
 import { Shield, Home, ArrowRight } from "lucide-react";
 
-const BG   = "rgb(30, 46, 72)";
+const BG   = "rgb(15, 35, 75)";
 const GOLD = "rgb(198, 169, 74)";
 const TEXT = "rgb(235, 240, 245)";
 const BODY = "rgb(185, 195, 210)";

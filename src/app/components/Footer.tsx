@@ -16,7 +16,19 @@ export function Footer() {
   return (
     <>
       {/* Wave transitions from whatever the last page section is into the navy footer */}
-      <WaveDivider topColor="rgb(243, 246, 251)" bottomColor={NAVY} />
+      {/* Wave — gradient fill matches footer exactly */}
+      <div style={{ background: "rgb(243, 246, 251)", lineHeight: 0, marginBottom: "-1px" }}>
+        <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+          style={{ display: "block", width: "100%", height: "90px" }}>
+          <defs>
+            <linearGradient id="footer-wave-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stopColor="rgb(15, 35, 75)" />
+              <stop offset="100%" stopColor="rgb(22, 52, 110)" />
+            </linearGradient>
+          </defs>
+          <path d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z" fill="url(#footer-wave-grad)" />
+        </svg>
+      </div>
 
       <footer
         style={{
@@ -138,7 +150,6 @@ export function Footer() {
 
         <div
           className="pt-6 flex flex-col md:flex-row justify-between items-center gap-4"
-          style={{ borderTop: `1px solid ${BORDER}` }}
         >
           <p className="text-xs" style={{ color: TEXT_MUT }}>
             &copy; {new Date().getFullYear()} Shadow Training Institute. All rights reserved.

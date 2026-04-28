@@ -14,7 +14,7 @@ const CARD    = "#ffffff";
 const BORDER  = "rgba(0,0,0,0.07)";
 const BLUE    = "rgb(37, 99, 235)";
 const BLUE_S  = "rgba(37,99,235,0.08)";
-const NAVY    = "rgb(13, 27, 62)";
+const NAVY    = "rgb(15, 35, 75)";
 const TEXT    = "rgb(15, 23, 42)";
 const BODY    = "rgb(71, 85, 105)";
 const MUTED   = "rgb(148, 163, 184)";
@@ -90,7 +90,7 @@ function ProgramRow({ program, index }: { program: typeof programs[0]; index: nu
         </div>
       </div>
 
-      <div className="flex items-center justify-between pt-4" style={{ borderTop: `1px solid ${BORDER}` }}>
+      <div className="flex items-center justify-between pt-4">
         <p className="text-xs" style={{ color: MUTED }}>
           <span className="font-semibold" style={{ color: BODY }}>Audience:</span> {program.audience}
         </p>

@@ -14,7 +14,8 @@ const CARD    = "#ffffff";
 const BORDER  = "rgba(0,0,0,0.07)";
 const BLUE    = "rgb(37, 99, 235)";
 const BLUE_S  = "rgba(37,99,235,0.08)";
-const NAVY    = "rgb(13, 27, 62)";
+const NAVY    = "rgb(15, 35, 75)";
+const NAVY_MID = "rgb(22, 52, 110)";
 const TEXT    = "rgb(15, 23, 42)";
 const BODY    = "rgb(71, 85, 105)";
 const EASE    = [0.22, 1, 0.36, 1] as const;
@@ -150,7 +151,6 @@ function MethodRow({ method, index }: { method: typeof methodologies[0]; index: 
         imageLeft={imageLeft}
         bgColor={rowBg}
       />
-      <WaveDivider topColor={rowBg} bottomColor={index % 2 === 0 ? SURFACE : CARD} />
     </motion.div>
   );
 }
@@ -230,41 +230,52 @@ export function Methodology() {
         <MethodRow key={method.id} method={method} index={index} />
       ))}
 
+      {/* single wave into CTA — last row is even so bg is CARD */}
+      <div style={{ background: CARD, lineHeight: 0, marginBottom: "-1px" }}>
+        <svg viewBox="0 0 1440 90" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+          style={{ display: "block", width: "100%", height: "90px" }}>
+          <defs>
+            <linearGradient id="meth-wave-navy" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%"   stopColor={NAVY} />
+              <stop offset="100%" stopColor={NAVY_MID} />
+            </linearGradient>
+          </defs>
+          <path d="M0,40 C240,90 480,0 720,45 C960,90 1200,10 1440,50 L1440,90 L0,90 Z" fill="url(#meth-wave-navy)" />
+        </svg>
+      </div>
+
       {/* CTA */}
-      <section style={{ backgroundColor: CARD }}>
-        <WaveDivider topColor={CARD} bottomColor={NAVY} flip />
-        <div style={{ backgroundColor: NAVY }}>
-          <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.55, ease: EASE }}
-            >
-              <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Open Sans', sans-serif", color: "#fff" }}>
-                Experience Our Methodology in Action
-              </h2>
-              <p className="mb-8 max-w-xl mx-auto leading-relaxed text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
-                Our comprehensive approach ensures you don't just learn — you master skills that can save lives.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.18, ease: EASE }}>
-                  <Link to="/programs" className="inline-flex items-center gap-2 px-8 py-4 font-bold rounded-xl"
-                    style={{ backgroundColor: BLUE, color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.40)" }}>
-                    View Training Programs <ArrowRight className="w-5 h-5" />
-                  </Link>
-                </motion.div>
-                <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.18, ease: EASE }}>
-                  <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 font-bold rounded-xl"
-                    style={{ border: "1px solid rgba(255,255,255,0.25)", color: "#fff", backgroundColor: "transparent" }}>
-                    Schedule a Consultation
-                  </Link>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
+      <div style={{ backgroundColor: NAVY }}>
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.55, ease: EASE }}
+          >
+            <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: "'Open Sans', sans-serif", color: "#fff" }}>
+              Experience Our Methodology in Action
+            </h2>
+            <p className="mb-8 max-w-xl mx-auto leading-relaxed text-sm" style={{ color: "rgba(255,255,255,0.65)" }}>
+              Our comprehensive approach ensures you don't just learn — you master skills that can save lives.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.18, ease: EASE }}>
+                <Link to="/programs" className="inline-flex items-center gap-2 px-8 py-4 font-bold rounded-xl"
+                  style={{ backgroundColor: BLUE, color: "#fff", boxShadow: "0 4px 20px rgba(37,99,235,0.40)" }}>
+                  View Training Programs <ArrowRight className="w-5 h-5" />
+                </Link>
+              </motion.div>
+              <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.18, ease: EASE }}>
+                <Link to="/contact" className="inline-flex items-center gap-2 px-8 py-4 font-bold rounded-xl"
+                  style={{ border: "1px solid rgba(255,255,255,0.25)", color: "#fff", backgroundColor: "transparent" }}>
+                  Schedule a Consultation
+                </Link>
+              </motion.div>
+            </div>
+          </motion.div>
         </div>
-      </section>
+      </div>
     </div>
   );
 }
