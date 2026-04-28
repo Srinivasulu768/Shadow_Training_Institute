@@ -181,6 +181,7 @@ export function Programs() {
               </motion.div>
             </motion.div>
           </div>
+          <WaveDivider topColor={NAVY} bottomColor="rgb(243, 246, 251)" />
         </div>
       </section>
     </div>

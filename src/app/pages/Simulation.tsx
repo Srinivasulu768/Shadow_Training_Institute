@@ -193,6 +193,7 @@ export function Simulation() {
             </motion.div>
           </motion.div>
         </div>
+        <WaveDivider topColor={NAVY} bottomColor="rgb(243, 246, 251)" />
       </section>
     </div>
   );
