@@ -185,7 +185,7 @@ export function Home() {
         className="relative overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`,
-          minHeight: "100vh",
+          minHeight: "calc(100vh - 140px)",
           display: "flex",
           alignItems: "center",
           paddingTop: "0",
