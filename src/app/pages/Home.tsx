@@ -1,5 +1,6 @@
 import { Link } from "react-router";
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useRef, useState as useFlipState } from "react";
 import {
   BookOpen, Target, Brain, GraduationCap,
   Heart, Shield, Activity, Award, Users,
@@ -7,7 +8,8 @@ import {
   Star, TrendingUp, Zap, ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { useState } from "react";
-import { AnimatedCard, FadeUp, FadeIn, EASE_OUT } from "../components/AnimatedCard";
+import { FadeUp, FadeIn, EASE_OUT, AnimatedCard } from "../components/AnimatedCard";
+import { WaveDivider } from "../components/WaveDivider";
 
 /* ── design tokens ── */
 const NAVY      = "rgb(13, 27, 62)";
@@ -37,36 +39,60 @@ const heroSlides = [
     title: "Safety Programs",
     desc: "Life-saving skills including CPR, First Aid, and more",
     link: "/programs#cpr-aed",
-    img: "/images/sti4.jpg",
+    img: "/images/sti12.jpg",
   },
   {
     icon: Shield,
     title: "Crisis Prevention",
     desc: "De-escalation and crisis intervention training",
     link: "/programs#cpi-crisis",
-    img: "/images/sti6.jpg",
+    img: "/images/sti2.jpg",
   },
   {
     icon: Target,
     title: "Tactical Training",
     desc: "Elite security and protection protocols",
     link: "/programs#tactical-training",
-    img: "/images/sti8.jpg",
+    img: "/images/sti1.jpg",
   },
   {
     icon: Activity,
     title: "Stop the Bleed",
     desc: "Critical hemorrhage control and emergency response",
     link: "/programs#stop-the-bleed",
-    img: "/images/sti5.jpg",
+    img: "/images/sti7.jpg",
   },
 ];
 
 const whyItems = [
-  { icon: Award,      title: "Certified Instructors",   desc: "All instructors hold active certifications and real-world operational experience." },
-  { icon: Target,     title: "Expert Instructors",      desc: "Industry veterans with hands-on field experience across multiple disciplines." },
-  { icon: TrendingUp, title: "Effective Focus",         desc: "Evidence-based curriculum designed for maximum skill retention and application." },
-  { icon: Zap,        title: "Proven Results",          desc: "98% certification rate with thousands of professionals trained nationwide." },
+  {
+    icon: Award,
+    title: "Certified Instructors",
+    desc: "All instructors hold active certifications and real-world operational experience.",
+    back: "Every instructor brings field-tested expertise — from law enforcement to healthcare — ensuring training that reflects real emergencies, not just theory.",
+    link: "/methodology",
+  },
+  {
+    icon: Target,
+    title: "Expert Instructors",
+    desc: "Industry veterans with hands-on field experience across multiple disciplines.",
+    back: "Our team includes former military, security professionals, and medical responders who have operated in high-stakes environments worldwide.",
+    link: "/methodology",
+  },
+  {
+    icon: TrendingUp,
+    title: "Effective Focus",
+    desc: "Evidence-based curriculum designed for maximum skill retention and application.",
+    back: "We use blended learning, scenario-based training, and stress inoculation — proven methods that build skills that stick under pressure.",
+    link: "/methodology",
+  },
+  {
+    icon: Zap,
+    title: "Proven Results",
+    desc: "High certification rate with professionals trained across every sector.",
+    back: "From corporate teams to healthcare staff and security professionals — our graduates leave prepared to respond confidently in any critical situation.",
+    link: "/programs",
+  },
 ];
 
 
@@ -87,6 +113,54 @@ const testimonials = [
     title: "Corporate Safety Manager",
   },
 ];
+
+/* ─────────────────────────────────────────────
+   FlipCard — 3D flip on hover, front → back
+───────────────────────────────────────────── */
+interface FlipCardProps {
+  front: React.ReactNode;
+  back: React.ReactNode;
+  height?: number;
+  delay?: number;
+}
+
+function FlipCard({ front, back, height = 200, delay = 0 }: FlipCardProps) {
+  const [flipped, setFlipped] = useFlipState(false);
+  const ref = useRef<HTMLDivElement>(null);
+  const inView = useInView(ref, { once: true, margin: "-60px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 22 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.5, delay, ease: EASE_OUT }}
+      style={{ perspective: "1000px", height: `${height}px`, cursor: "pointer" }}
+      onMouseEnter={() => setFlipped(true)}
+      onMouseLeave={() => setFlipped(false)}
+    >
+      <motion.div
+        style={{
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          transformStyle: "preserve-3d",
+        }}
+        animate={{ rotateY: flipped ? 180 : 0 }}
+        transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+      >
+        {/* Front */}
+        <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden" }}>
+          {front}
+        </div>
+        {/* Back */}
+        <div style={{ position: "absolute", inset: 0, backfaceVisibility: "hidden", WebkitBackfaceVisibility: "hidden", transform: "rotateY(180deg)" }}>
+          {back}
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
 
 export function Home() {
   const [activeTestimonial, setActiveTestimonial] = useState(0);
@@ -174,26 +248,6 @@ export function Home() {
                 </motion.div>
               </div>
 
-              {/* Stats */}
-              <div className="flex gap-8">
-                {[
-                  { value: "500+",  label: "Organizations" },
-                  { value: "10k+",  label: "Trained" },
-                  { value: "95%",   label: "Satisfaction" },
-                ].map((s, i) => (
-                  <motion.div
-                    key={s.label}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: 0.6 + i * 0.1, ease: EASE_OUT }}
-                  >
-                    <div className="text-2xl font-extrabold" style={{ color: WHITE, fontFamily: "'Open Sans', sans-serif" }}>
-                      {s.value}
-                    </div>
-                    <div className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>{s.label}</div>
-                  </motion.div>
-                ))}
-              </div>
             </motion.div>
 
             {/* RIGHT — card carousel */}
@@ -280,6 +334,9 @@ export function Home() {
         </div>
       </section>
 
+      {/* wave: NAVY → WHITE */}
+      <WaveDivider topColor={NAVY_MID} bottomColor={WHITE} />
+
       {/* ══ LEARNING METHODOLOGIES ══ */}
       <section className="py-20 overflow-hidden" style={{ backgroundColor: WHITE }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -293,91 +350,37 @@ export function Home() {
           </FadeIn>
         </div>
 
-        {/* ── Infinite marquee track ── */}
-        <div
-          className="relative"
-          style={{ overflow: "hidden" }}
-          /* pause on hover */
-          onMouseEnter={(e) => {
-            const track = e.currentTarget.querySelector<HTMLDivElement>(".marquee-track");
-            if (track) track.style.animationPlayState = "paused";
-          }}
-          onMouseLeave={(e) => {
-            const track = e.currentTarget.querySelector<HTMLDivElement>(".marquee-track");
-            if (track) track.style.animationPlayState = "running";
-          }}
-        >
-          {/* fade edges */}
-          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to right, #ffffff, transparent)" }} />
-          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: "linear-gradient(to left, #ffffff, transparent)" }} />
-
-          <div
-            className="marquee-track flex gap-5"
-            style={{
-              width: "max-content",
-              animation: "marquee-scroll 28s linear infinite",
-              willChange: "transform",
-            }}
-          >
-            {/* duplicate the list twice for seamless loop */}
-            {[...methodologies, ...methodologies].map((m, i) => (
-              <motion.div
-                key={`${m.title}-${i}`}
-                className="rounded-2xl p-6 cursor-default overflow-hidden relative flex-shrink-0"
-                style={{
-                  backgroundColor: BG_LIGHT,
-                  border: `1px solid ${BORDER}`,
-                  width: "200px",
-                }}
-                whileHover={{
-                  y: -7,
-                  scale: 1.03,
-                  boxShadow: "0 16px 40px rgba(37,99,235,0.14)",
-                  borderColor: "rgba(37,99,235,0.25)",
-                }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.25, ease: EASE_OUT }}
+        {/* ── Static grid ── */}
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            {methodologies.map((m, i) => (
+              <AnimatedCard
+                key={m.title}
+                delay={i * 0.08}
+                className="rounded-2xl p-5 cursor-default"
+                style={{ backgroundColor: BG_LIGHT, border: `1px solid ${BORDER}` }}
               >
-                {/* shimmer on hover */}
-                <motion.div
-                  className="absolute inset-0 pointer-events-none rounded-2xl"
-                  style={{
-                    background: "linear-gradient(110deg, transparent 30%, rgba(37,99,235,0.07) 50%, transparent 70%)",
-                    backgroundSize: "200% 100%",
-                    backgroundPosition: "200% 0",
-                  }}
-                  whileHover={{ backgroundPosition: "-200% 0" }}
-                  transition={{ duration: 0.55, ease: "easeOut" }}
-                />
-                {/* icon */}
                 <motion.div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
                   style={{ backgroundColor: BLUE }}
-                  whileHover={{ scale: 1.1, rotate: 4 }}
-                  transition={{ duration: 0.22, ease: EASE_OUT }}
+                  whileHover={{ scale: 1.1 }}
+                  transition={{ duration: 0.2, ease: EASE_OUT }}
                 >
                   <m.icon className="w-6 h-6" style={{ color: WHITE }} />
                 </motion.div>
                 <h3 className="text-sm font-bold leading-snug mb-1" style={{ color: TEXT }}>{m.title}</h3>
                 <p className="text-xs leading-relaxed" style={{ color: TEXT_BODY }}>{m.desc}</p>
-              </motion.div>
+              </AnimatedCard>
             ))}
           </div>
         </div>
-
-        {/* keyframe injected inline */}
-        <style>{`
-          @keyframes marquee-scroll {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-        `}</style>
       </section>
 
+      {/* wave: WHITE → BG_LIGHT */}
+      <WaveDivider topColor={WHITE} bottomColor={BG_LIGHT} />
+
       {/* ══ TRAINING PROGRAMS ══ */}
-      <section className="py-20 overflow-hidden" style={{ backgroundColor: BG_LIGHT }}>
+      <section className="py-20" style={{ backgroundColor: BG_LIGHT }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeIn className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-3" style={{ fontFamily: "'Open Sans', sans-serif", color: TEXT }}>
@@ -388,100 +391,89 @@ export function Home() {
             </p>
             <div className="w-12 h-1 rounded-full mx-auto mt-4" style={{ backgroundColor: BLUE }} />
           </FadeIn>
-        </div>
 
-        {/* Reverse marquee */}
-        <div
-          className="relative mb-8"
-          style={{ overflow: "hidden" }}
-          onMouseEnter={(e) => { const t = e.currentTarget.querySelector<HTMLDivElement>(".marquee-rev"); if (t) t.style.animationPlayState = "paused"; }}
-          onMouseLeave={(e) => { const t = e.currentTarget.querySelector<HTMLDivElement>(".marquee-rev"); if (t) t.style.animationPlayState = "running"; }}
-        >
-          <div className="absolute left-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: `linear-gradient(to right, ${BG_LIGHT}, transparent)` }} />
-          <div className="absolute right-0 top-0 bottom-0 w-24 z-10 pointer-events-none"
-            style={{ background: `linear-gradient(to left, ${BG_LIGHT}, transparent)` }} />
-
-          <div
-            className="marquee-rev flex gap-5"
-            style={{
-              width: "max-content",
-              animation: "marquee-scroll-rev 32s linear infinite",
-              willChange: "transform",
-            }}
-          >
-            {[...([
-              { icon: Heart,    title: "CPR / AED / First Aid",   duration: "4–8 hrs",  link: "/programs#cpr-aed" },
-              { icon: Activity, title: "Stop the Bleed",           duration: "2 hrs",    link: "/programs#stop-the-bleed" },
-              { icon: Shield,   title: "Active Shooter Response",  duration: "4–8 hrs",  link: "/programs#active-shooter" },
-              { icon: Target,   title: "Tactical Training",        duration: "Custom",   link: "/programs#tactical-training" },
-              { icon: Award,    title: "Continuing Education",     duration: "Varies",   link: "/programs#continuing-education" },
-            ]), ...([
-              { icon: Heart,    title: "CPR / AED / First Aid",   duration: "4–8 hrs",  link: "/programs#cpr-aed" },
-              { icon: Activity, title: "Stop the Bleed",           duration: "2 hrs",    link: "/programs#stop-the-bleed" },
-              { icon: Shield,   title: "Active Shooter Response",  duration: "4–8 hrs",  link: "/programs#active-shooter" },
-              { icon: Target,   title: "Tactical Training",        duration: "Custom",   link: "/programs#tactical-training" },
-              { icon: Award,    title: "Continuing Education",     duration: "Varies",   link: "/programs#continuing-education" },
-            ])].map((p, i) => (
-              <Link
-                key={`prog-${i}`}
-                to={p.link}
-                style={{ textDecoration: "none", flexShrink: 0 }}
-              >
-                <motion.div
-                  className="rounded-2xl p-6 overflow-hidden relative"
-                  style={{
-                    backgroundColor: WHITE,
-                    border: `1px solid ${BORDER}`,
-                    boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-                    width: "220px",
-                  }}
-                  whileHover={{
-                    y: -7,
-                    scale: 1.03,
-                    boxShadow: "0 16px 40px rgba(37,99,235,0.14)",
-                    borderColor: "rgba(37,99,235,0.25)",
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.25, ease: EASE_OUT }}
-                >
-                  <motion.div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
-                    style={{ backgroundColor: BLUE }}
-                    whileHover={{ scale: 1.1, rotate: 4 }}
-                    transition={{ duration: 0.22, ease: EASE_OUT }}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
+            {[
+              { icon: Heart,    title: "CPR / AED / First Aid",   duration: "4–8 hrs",  link: "/programs#cpr-aed",             back: "Learn adult, child & infant CPR, AED operation, wound care, and emergency response techniques." },
+              { icon: Activity, title: "Stop the Bleed",           duration: "2 hrs",    link: "/programs#stop-the-bleed",       back: "DHS-developed hemorrhage control training — tourniquet application, wound packing, and pressure techniques." },
+              { icon: Shield,   title: "Active Shooter Response",  duration: "4–8 hrs",  link: "/programs#active-shooter",       back: "ALERRT-aligned Run-Hide-Fight protocols, situational awareness, and coordinated emergency response." },
+              { icon: Target,   title: "Tactical Training",        duration: "Custom",   link: "/programs#tactical-training",    back: "Elite security protocols — tactical movement, threat assessment, protective formations, and vehicle operations." },
+              { icon: Award,    title: "Continuing Education",     duration: "Varies",   link: "/programs#continuing-education", back: "CEU credits, recertification courses, and advanced specialty modules for certified professionals." },
+              { icon: Brain,    title: "CPI – Crisis Prevention",  duration: "1–2 days", link: "/programs#cpi-crisis",           back: "Evidence-based de-escalation, behavioral assessment, and safe physical intervention for high-stress environments." },
+            ].map((p, i) => (
+              <FlipCard
+                key={p.title}
+                delay={i * 0.08}
+                height={220}
+                front={
+                  <div
+                    className="rounded-2xl p-6 h-full flex flex-col"
+                    style={{
+                      backgroundColor: BG_LIGHT,
+                      border: `1px solid ${BORDER}`,
+                      boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                    }}
                   >
-                    <p.icon className="w-5 h-5" style={{ color: WHITE }} />
-                  </motion.div>
-                  <h3 className="text-sm font-bold mb-1" style={{ color: TEXT }}>{p.title}</h3>
-                  <p className="text-xs mb-3" style={{ color: TEXT_MUT }}>{p.duration}</p>
-                  <div className="flex items-center gap-1 text-xs font-bold" style={{ color: BLUE }}>
-                    Learn More <ArrowRight className="w-3 h-3" />
+                    <div
+                      className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                      style={{ backgroundColor: BLUE }}
+                    >
+                      <p.icon className="w-5 h-5" style={{ color: WHITE }} />
+                    </div>
+                    <h3 className="text-base font-bold mb-1" style={{ color: TEXT }}>{p.title}</h3>
+                    <p className="text-xs mb-3" style={{ color: TEXT_MUT }}>{p.duration}</p>
+                    <div className="flex items-center gap-1 text-xs font-bold mt-auto" style={{ color: BLUE }}>
+                      Learn More <ArrowRight className="w-3.5 h-3.5" />
+                    </div>
                   </div>
-                </motion.div>
-              </Link>
+                }
+                back={
+                  <Link
+                    to={p.link}
+                    className="rounded-2xl p-6 h-full flex flex-col justify-between"
+                    style={{
+                      backgroundColor: NAVY,
+                      textDecoration: "none",
+                      boxShadow: "0 8px 32px rgba(13,27,62,0.25)",
+                    }}
+                  >
+                    <div>
+                      <div
+                        className="w-10 h-10 rounded-xl flex items-center justify-center mb-3"
+                        style={{ backgroundColor: "rgba(37,99,235,0.35)" }}
+                      >
+                        <p.icon className="w-5 h-5" style={{ color: "rgb(147,197,253)" }} />
+                      </div>
+                      <h3 className="text-sm font-bold mb-2" style={{ color: WHITE }}>{p.title}</h3>
+                      <p className="text-xs leading-relaxed" style={{ color: "rgba(255,255,255,0.70)" }}>
+                        {p.back}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-1 text-xs font-bold mt-4" style={{ color: "rgb(147,197,253)" }}>
+                      Enroll Now <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </Link>
+                }
+              />
             ))}
           </div>
+
+          <FadeUp delay={0.3} className="text-center">
+            <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: EASE_OUT }} style={{ display: "inline-block" }}>
+              <Link to="/programs"
+                className="inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-lg"
+                style={{ background: NAVY, color: WHITE, boxShadow: "0 4px 12px rgba(13,27,62,0.20)", transition: "box-shadow 0.25s ease" }}
+                onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 20px rgba(13,27,62,0.30)"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(13,27,62,0.20)"; }}>
+                View All Programs <ArrowRight className="w-4 h-4" />
+              </Link>
+            </motion.div>
+          </FadeUp>
         </div>
-
-        <FadeUp delay={0.3} className="text-center">
-          <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.97 }} transition={{ duration: 0.2, ease: EASE_OUT }} style={{ display: "inline-block" }}>
-            <Link to="/programs" className="inline-flex items-center gap-2 px-7 py-3 text-sm font-bold rounded-lg"
-              style={{ background: NAVY, color: WHITE, boxShadow: "0 4px 12px rgba(13,27,62,0.20)", transition: "box-shadow 0.25s ease" }}
-              onMouseEnter={(e) => { e.currentTarget.style.boxShadow = "0 8px 20px rgba(13,27,62,0.30)"; }}
-              onMouseLeave={(e) => { e.currentTarget.style.boxShadow = "0 4px 12px rgba(13,27,62,0.20)"; }}>
-              View All Programs <ArrowRight className="w-4 h-4" />
-            </Link>
-          </motion.div>
-        </FadeUp>
-
-        <style>{`
-          @keyframes marquee-scroll-rev {
-            0%   { transform: translateX(-50%); }
-            100% { transform: translateX(0); }
-          }
-        `}</style>
       </section>
+
+      {/* wave: BG_LIGHT → WHITE */}
+      <WaveDivider topColor={BG_LIGHT} bottomColor={WHITE} />
 
       {/* ══ FEATURED PARTNERSHIP + SIMULATION ══ */}
       <section className="py-20" style={{ backgroundColor: WHITE }}>
@@ -567,6 +559,9 @@ export function Home() {
         </div>
       </section>
 
+      {/* wave: WHITE → BG_LIGHT */}
+      <WaveDivider topColor={WHITE} bottomColor={BG_LIGHT} flip />
+
       {/* ══ WHY CHOOSE SHADOW ══ */}
       <section className="py-20" style={{ backgroundColor: BG_LIGHT }}>
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -581,31 +576,61 @@ export function Home() {
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
             {whyItems.map((item, i) => (
-              <AnimatedCard
+              <FlipCard
                 key={item.title}
                 delay={i * 0.09}
-                className="rounded-xl p-6 text-center"
-                style={{
-                  backgroundColor: WHITE,
-                  border: `1px solid ${BORDER}`,
-                  boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-                }}
-              >
-                <motion.div
-                  className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
-                  style={{ backgroundColor: BLUE_SOFT }}
-                  whileHover={{ scale: 1.1, backgroundColor: BLUE }}
-                  transition={{ duration: 0.22, ease: EASE_OUT }}
-                >
-                  <item.icon className="w-6 h-6" style={{ color: BLUE }} />
-                </motion.div>
-                <h3 className="text-sm font-bold mb-2" style={{ color: TEXT }}>{item.title}</h3>
-                <p className="text-xs leading-relaxed" style={{ color: TEXT_BODY }}>{item.desc}</p>
-              </AnimatedCard>
+                height={210}
+                front={
+                  <div
+                    className="rounded-2xl p-6 text-center h-full flex flex-col items-center justify-center"
+                    style={{
+                      backgroundColor: BG_LIGHT,
+                      border: `1px solid ${BORDER}`,
+                      boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
+                    }}
+                  >
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4"
+                      style={{ backgroundColor: BLUE }}
+                    >
+                      <item.icon className="w-6 h-6" style={{ color: WHITE }} />
+                    </div>
+                    <h3 className="text-sm font-bold mb-2" style={{ color: TEXT }}>{item.title}</h3>
+                    <p className="text-xs leading-relaxed" style={{ color: TEXT_BODY }}>{item.desc}</p>
+                  </div>
+                }
+                back={
+                  <Link
+                    to={item.link}
+                    className="rounded-2xl p-6 h-full flex flex-col items-center justify-center text-center"
+                    style={{
+                      backgroundColor: NAVY,
+                      textDecoration: "none",
+                      boxShadow: "0 8px 32px rgba(13,27,62,0.25)",
+                    }}
+                  >
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center mx-auto mb-3"
+                      style={{ backgroundColor: "rgba(37,99,235,0.35)" }}
+                    >
+                      <item.icon className="w-5 h-5" style={{ color: "rgb(147,197,253)" }} />
+                    </div>
+                    <p className="text-xs leading-relaxed mb-4" style={{ color: "rgba(255,255,255,0.75)" }}>
+                      {item.back}
+                    </p>
+                    <div className="flex items-center gap-1 text-xs font-bold" style={{ color: "rgb(147,197,253)" }}>
+                      Learn More <ArrowRight className="w-3 h-3" />
+                    </div>
+                  </Link>
+                }
+              />
             ))}
           </div>
         </div>
       </section>
+
+      {/* wave: BG_LIGHT → NAVY */}
+      <WaveDivider topColor={BG_LIGHT} bottomColor={NAVY} />
 
       {/* ══ ENTERPRISE TRAINING SOLUTIONS ══ */}
       <section
@@ -715,6 +740,9 @@ export function Home() {
         </div>
       </section>
 
+      {/* wave: NAVY → WHITE */}
+      <WaveDivider topColor={NAVY_MID} bottomColor={WHITE} flip />
+
       {/* ══ TESTIMONIALS ══ */}
       <section className="py-20" style={{ backgroundColor: WHITE }}>
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -777,6 +805,9 @@ export function Home() {
           </FadeUp>
         </div>
       </section>
+
+      {/* wave: WHITE → BG_LIGHT */}
+      <WaveDivider topColor={WHITE} bottomColor={BG_LIGHT} />
 
       {/* ══ FINAL CTA ══ */}
       <section className="py-20" style={{ backgroundColor: BG_LIGHT }}>

@@ -1,5 +1,6 @@
 import { Link } from "react-router";
 import { Mail, Phone, MapPin } from "lucide-react";
+import { WaveDivider } from "./WaveDivider";
 
 const scrollToTop = () => window.scrollTo({ top: 0, behavior: "instant" });
 
@@ -13,13 +14,17 @@ const TEXT_MUT  = "rgba(255,255,255,0.40)";
 
 export function Footer() {
   return (
-    <footer
-      style={{
-        fontFamily: "'Lato', sans-serif",
-        background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`,
-        color: WHITE,
-      }}
-    >
+    <>
+      {/* Wave transitions from whatever the last page section is into the navy footer */}
+      <WaveDivider topColor="rgb(243, 246, 251)" bottomColor={NAVY} />
+
+      <footer
+        style={{
+          fontFamily: "'Lato', sans-serif",
+          background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`,
+          color: WHITE,
+        }}
+      >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-10">
 
@@ -159,5 +164,6 @@ export function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
