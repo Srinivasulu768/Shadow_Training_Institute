@@ -91,7 +91,7 @@ export function Navigation() {
           zIndex: 200,
           background: scrolled
             ? `rgba(15, 35, 75, 0.97)`
-            : `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`,
+            : `transparent`,
           backdropFilter: scrolled ? "blur(16px)" : "none",
           borderBottom: "none",
           boxShadow: scrolled ? "0 4px 24px rgba(0,0,0,0.30)" : "none",
@@ -192,8 +192,8 @@ export function Navigation() {
                 style={{
                   width: scrolled ? "48px" : "48px",
                   height: scrolled ? "48px" : "48px",
-                  background: isOpen ? "rgba(255,255,255,0.20)" : "rgba(255,255,255,0.10)",
-                  border: `1px solid ${BORDER}`,
+                  background: isOpen ? "rgba(255,255,255,0.20)" : scrolled ? "rgba(255,255,255,0.10)" : "rgba(255,255,255,0.15)",
+                  border: `1px solid ${scrolled ? BORDER : "rgba(255,255,255,0.20)"}`,
                   transition: "background 0.2s ease, width 0.35s ease, height 0.35s ease",
                 }}
                 whileTap={{ scale: 0.9 }}

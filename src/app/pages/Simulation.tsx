@@ -27,7 +27,7 @@ export function Simulation() {
     <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: BG }}>
 
       {/* ── Hero ── */}
-      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", paddingBottom: 0 }}>
+      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", paddingBottom: 0, marginTop: "-140px", paddingTop: "140px" }}>
         <WaveSplitRow
           imageLeft={false}
           bgColor={NAVY}

@@ -185,10 +185,11 @@ export function Home() {
         className="relative overflow-hidden"
         style={{
           background: `linear-gradient(135deg, ${NAVY} 0%, ${NAVY_MID} 100%)`,
-          minHeight: "calc(100vh - 140px)",
+          minHeight: "100vh",
           display: "flex",
           alignItems: "center",
-          paddingTop: "0",
+          marginTop: "-140px",
+          paddingTop: "140px",
         }}
       >
         {/* subtle dot grid */}

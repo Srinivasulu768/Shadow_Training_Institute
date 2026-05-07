@@ -135,7 +135,7 @@ export function Programs() {
   return (
     <div style={{ fontFamily: "'Lato', sans-serif", backgroundColor: BG }}>
       {/* Hero */}
-      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", paddingBottom: 0 }}>
+      <section style={{ background: "linear-gradient(135deg, rgb(15, 35, 75) 0%, rgb(22, 52, 110) 100%)", paddingBottom: 0, marginTop: "-140px", paddingTop: "140px" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-10">
           <motion.div ref={headerRef} className="text-center"
             initial={{ opacity: 0, y: 24 }} animate={headerInView ? { opacity: 1, y: 0 } : {}}
